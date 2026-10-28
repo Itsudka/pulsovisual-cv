@@ -1,0 +1,48 @@
+<!-- ==========================
+     ACTIVIDAD POR PERIODO
+========================== -->
+
+<article class="chart-card">
+
+  <!-- ==========================
+       ENCABEZADO
+  ========================== -->
+
+  <header class="chart-header">
+
+    <div>
+      <h2>
+        Actividad por periodo
+      </h2>
+
+      <p>
+        Tracks detectados según la fecha de grabación
+      </p>
+    </div>
+
+  </header>
+
+
+  <!-- ==========================
+       CONTENIDO
+  ========================== -->
+
+  @if (activity.length > 0) {
+
+    <div class="chart-container">
+
+      <canvas
+        #activityCanvas
+      ></canvas>
+
+    </div>
+
+  } @else {
+
+    <div class="empty-state">
+      No hay información disponible para este periodo.
+    </div>
+
+  }
+
+</article>

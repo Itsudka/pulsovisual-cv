@@ -1,0 +1,135 @@
+<!-- ==========================
+     LAYOUT PRINCIPAL
+========================== -->
+
+<div class="app-layout">
+
+  <!-- ==========================
+       SIDEBAR
+  ========================== -->
+
+  <aside class="sidebar">
+
+    <!-- ==========================
+         MARCA
+    ========================== -->
+
+    <div class="sidebar-brand">
+      <div class="brand-icon">
+        P
+      </div>
+
+      <span>
+        PulsoVisual
+      </span>
+    </div>
+
+
+    <!-- ==========================
+         NAVEGACION
+    ========================== -->
+
+    <nav class="sidebar-nav">
+
+      <a
+        routerLink="/dashboard"
+        routerLinkActive="active"
+        class="nav-item"
+      >
+        Dashboard
+      </a>
+
+      <div class="nav-item disabled">
+        Sectores
+      </div>
+
+      <div class="nav-item disabled">
+        Nuevo análisis
+      </div>
+
+      <div class="nav-item disabled">
+        Historial
+      </div>
+
+    </nav>
+
+
+    <!-- ==========================
+         USUARIO
+    ========================== -->
+
+    <div class="sidebar-footer">
+      <button
+        type="button"
+        class="logout-button"
+        (click)="logout()"
+      >
+        Cerrar sesión
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <!-- ==========================
+       CONTENIDO
+  ========================== -->
+
+  <main class="main-content">
+
+  <!-- ==========================
+      HEADER
+  ========================== -->
+
+  <header class="topbar">
+
+    <!-- ==========================
+        PAGINA ACTUAL
+    ========================== -->
+
+    <div class="page-header">
+
+      <h1>
+        {{ pageTitle() }}
+      </h1>
+
+      <p>
+        {{ pageSubtitle() }}
+      </p>
+
+    </div>
+
+
+    <!-- ==========================
+        USUARIO
+    ========================== -->
+
+    @if (currentUser()) {
+
+      <div class="topbar-user">
+
+        <span class="user-status"></span>
+
+        <span>
+          {{ currentUser()?.name }}
+        </span>
+
+      </div>
+
+    }
+
+  </header>
+
+
+    <!-- ==========================
+         PAGINA ACTUAL
+    ========================== -->
+
+    <section class="page-content">
+      <router-outlet></router-outlet>
+    </section>
+
+  </main>
+
+</div>

@@ -1,0 +1,175 @@
+<!-- ==========================
+     PAGINA DE LOGIN
+========================== -->
+
+<div class="login-page">
+
+  <!-- ==========================
+       PANEL DE MARCA
+  ========================== -->
+
+  <section class="brand-panel">
+
+    <div class="brand-content">
+      <div class="brand-message">
+        <span class="brand-label">
+          Analítica de video
+        </span>
+
+        <h1>
+          Analiza el movimiento.
+          <br />
+          Comprende el espacio.
+        </h1>
+
+        <p>
+          Transforma tus grabaciones en información clara
+          sobre el comportamiento de tus espacios.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="brand-decoration decoration-one"></div>
+    <div class="brand-decoration decoration-two"></div>
+
+  </section>
+
+
+  <!-- ==========================
+       FORMULARIO
+  ========================== -->
+
+  <section class="form-panel">
+
+    <div class="login-container">
+
+      <div class="mobile-logo">
+        <div class="logo-icon">
+          P
+        </div>
+
+        <span>
+          PulsoVisual
+        </span>
+      </div>
+
+
+      <!-- ==========================
+           ENCABEZADO
+      ========================== -->
+
+      <div class="login-header">
+        <h2>
+          Bienvenido
+        </h2>
+
+        <p>
+          Ingresa a tu cuenta
+        </p>
+      </div>
+
+
+      <!-- ==========================
+           FORMULARIO DE LOGIN
+      ========================== -->
+
+      <form
+        [formGroup]="loginForm"
+        (ngSubmit)="login()"
+      >
+
+        <!-- ==========================
+             USUARIO
+        ========================== -->
+
+        <div class="field">
+
+          <label for="email">
+            Usuario
+          </label>
+
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            placeholder="Ingresa tu correo electrónico"
+            autocomplete="email"
+          />
+
+          @if (
+            loginForm.controls.email.touched &&
+            loginForm.controls.email.invalid
+          ) {
+            <span class="field-error">
+              Ingresa un correo electrónico válido.
+            </span>
+          }
+
+        </div>
+
+
+        <!-- ==========================
+             CONTRASEÑA
+        ========================== -->
+
+        <div class="field">
+
+          <label for="password">
+            Contraseña
+          </label>
+
+          <input
+            id="password"
+            type="password"
+            formControlName="password"
+            placeholder="Ingresa tu contraseña"
+            autocomplete="current-password"
+          />
+
+          @if (
+            loginForm.controls.password.touched &&
+            loginForm.controls.password.invalid
+          ) {
+            <span class="field-error">
+              La contraseña es obligatoria.
+            </span>
+          }
+
+        </div>
+
+
+        <!-- ==========================
+             ERROR DE AUTENTICACION
+        ========================== -->
+
+        @if (errorMessage()) {
+          <div class="login-error">
+            {{ errorMessage() }}
+          </div>
+        }
+
+
+        <!-- ==========================
+             BOTON
+        ========================== -->
+
+        <button
+          class="login-button"
+          type="submit"
+          [disabled]="isLoading()"
+        >
+          @if (isLoading()) {
+            Ingresando...
+          } @else {
+            Iniciar sesión
+          }
+        </button>
+
+      </form>
+
+    </div>
+
+  </section>
+
+</div>

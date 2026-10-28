@@ -1,0 +1,116 @@
+<!-- ==========================
+     DASHBOARD
+========================== -->
+
+<div class="dashboard-page">
+
+  <!-- ==========================
+       ESTADO DE CARGA
+  ========================== -->
+
+  @if (isLoading()) {
+
+    <div class="dashboard-message">
+      Cargando información...
+    </div>
+
+  } @else if (errorMessage()) {
+
+    <div class="dashboard-error">
+      {{ errorMessage() }}
+    </div>
+
+  } @else if (summary()) {
+
+    <!-- ==========================
+         RESUMEN
+    ========================== -->
+
+    <app-summary-cards
+      [summary]="summary()!"
+    />
+
+
+    <!-- ==========================
+         PRIMERA FILA
+    ========================== -->
+
+    <section class="dashboard-grid">
+
+      <!-- ==========================
+           ACTIVIDAD POR PERIODO
+      ========================== -->
+
+      @if (activity(); as activityData) {
+
+        <app-activity-chart
+          [activity]="activityData"
+        />
+
+      }
+
+
+      <!-- ==========================
+           PERMANENCIA POR SECTOR
+      ========================== -->
+
+      @if (sectors(); as sectorData) {
+
+        <app-dwell-by-sector
+          [sectors]="sectorData"
+        />
+
+      }
+
+    </section>
+
+
+    <!-- ==========================
+         SEGUNDA FILA
+    ========================== -->
+
+    @if (sectors(); as sectorData) {
+
+      <section class="dashboard-grid">
+
+        <!-- ==========================
+             DISTRIBUCION DE ACTIVIDAD
+        ========================== -->
+
+        <app-activity-distribution
+          [sectors]="sectorData"
+        />
+
+
+        <!-- ==========================
+             ACTIVIDAD POR SECTOR
+        ========================== -->
+
+        <app-activity-by-sector
+          [sectors]="sectorData"
+        />
+
+      </section>
+
+    }
+
+    <!-- ==========================
+         ACTIVIDAD HORARIA
+    ========================== -->
+
+    @if (hourly(); as hourlyData) {
+
+      <section class="dashboard-hourly">
+
+        <app-hourly-summary
+          [hourlyData]="hourlyData"
+        />
+
+      </section>
+
+    }
+  }
+
+</div>
+
+

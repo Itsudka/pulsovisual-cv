@@ -1,0 +1,130 @@
+<!-- ==========================
+     ACTIVIDAD HORARIA
+========================== -->
+
+<article class="hourly-card">
+
+  <!-- ==========================
+       ENCABEZADO
+  ========================== -->
+
+  <header class="hourly-header">
+
+    <div>
+
+      <h2>
+        Actividad por hora
+      </h2>
+
+      <p>
+        Identificación de horas pico y valle
+      </p>
+
+    </div>
+
+  </header>
+
+
+  <!-- ==========================
+       CONTENIDO
+  ========================== -->
+
+  @if (hourlyData.hourlyActivity.length > 0) {
+
+    <!-- ==========================
+         GRAFICA
+    ========================== -->
+
+    <div class="chart-container">
+
+      <canvas
+        #hourlyCanvas
+      ></canvas>
+
+    </div>
+
+
+    <!-- ==========================
+         RESUMEN HORARIO
+    ========================== -->
+
+    <div class="hour-summary">
+
+      <!-- ==========================
+           HORA VALLE
+      ========================== -->
+
+      <div class="hour-item valley">
+
+        <span class="hour-label">
+          Hora valle
+        </span>
+
+        @if (hourlyData.valleyHour) {
+
+          <strong>
+            {{ formatHour(hourlyData.valleyHour.hour) }}
+          </strong>
+
+          <span class="hour-tracks">
+            {{ hourlyData.valleyHour.detectedTrackCount }}
+            tracks
+          </span>
+
+        } @else {
+
+          <strong>
+            Sin datos
+          </strong>
+
+        }
+
+      </div>
+
+
+      <!-- ==========================
+           HORA PICO
+      ========================== -->
+
+      <div class="hour-item peak">
+
+        <span class="hour-label">
+          Hora pico
+        </span>
+
+        @if (hourlyData.peakHour) {
+
+          <strong>
+            {{ formatHour(hourlyData.peakHour.hour) }}
+          </strong>
+
+          <span class="hour-tracks">
+            {{ hourlyData.peakHour.detectedTrackCount }}
+            tracks
+          </span>
+
+        } @else {
+
+          <strong>
+            Sin datos
+          </strong>
+
+        }
+
+      </div>
+
+    </div>
+
+  } @else {
+
+    <!-- ==========================
+         SIN DATOS
+    ========================== -->
+
+    <div class="empty-state">
+      No hay información horaria disponible.
+    </div>
+
+  }
+
+</article>

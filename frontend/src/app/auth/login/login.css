@@ -1,0 +1,388 @@
+/* ==========================
+   PAGINA
+========================== */
+
+:host {
+  display: block;
+}
+
+.login-page {
+  min-height: 100vh;
+
+  display: grid;
+  grid-template-columns: 52% 48%;
+
+  background: #f8fafc;
+
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+
+/* ==========================
+   PANEL DE MARCA
+========================== */
+
+.brand-panel {
+  position: relative;
+
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+
+  padding: 72px 80px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #1e3a8a 0%,
+      #2563eb 65%,
+      #1d4ed8 100%
+    );
+
+  overflow: hidden;
+}
+
+.brand-content {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  max-width: 620px;
+
+  display: flex;
+  flex-direction: column;
+
+  color: #ffffff;
+}
+
+
+/* ==========================
+   LOGO
+========================== */
+
+.brand-logo,
+.mobile-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.brand-logo {
+  position: absolute;
+  top: -330px;
+  left: 0;
+}
+
+.logo-icon {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  color: #2563eb;
+
+  font-size: 24px;
+  font-weight: 800;
+}
+
+
+/* ==========================
+   MENSAJE PRINCIPAL
+========================== */
+
+.brand-message {
+  max-width: 570px;
+}
+
+.brand-label {
+  display: inline-block;
+
+  margin-bottom: 22px;
+  padding: 8px 14px;
+
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.1);
+
+  color: #dbeafe;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.brand-message h1 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: clamp(42px, 4vw, 62px);
+  line-height: 1.08;
+  letter-spacing: -2px;
+  font-weight: 700;
+}
+
+.brand-message p {
+  max-width: 510px;
+
+  margin: 28px 0 0;
+
+  color: #dbeafe;
+
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+
+/* ==========================
+   DECORACION
+========================== */
+
+.brand-decoration {
+  position: absolute;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.decoration-one {
+  width: 430px;
+  height: 430px;
+
+  right: -190px;
+  top: -130px;
+}
+
+.decoration-two {
+  width: 340px;
+  height: 340px;
+
+  left: -160px;
+  bottom: -140px;
+}
+
+
+/* ==========================
+   PANEL DEL FORMULARIO
+========================== */
+
+.form-panel {
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 60px;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 430px;
+}
+
+
+/* ==========================
+   LOGO MOVIL
+========================== */
+
+.mobile-logo {
+  display: none;
+
+  margin-bottom: 48px;
+
+  color: #0f172a;
+}
+
+
+/* ==========================
+   ENCABEZADO
+========================== */
+
+.login-header {
+  margin-bottom: 42px;
+}
+
+.login-header h2 {
+  margin: 0 0 10px;
+
+  color: #0f172a;
+
+  font-size: 36px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+.login-header p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+
+/* ==========================
+   CAMPOS
+========================== */
+
+.field {
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 24px;
+}
+
+.field label {
+  margin-bottom: 9px;
+
+  color: #0f172a;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.field input {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 14px 16px;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #0f172a;
+
+  font-family: inherit;
+  font-size: 15px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.field input::placeholder {
+  color: #94a3b8;
+}
+
+.field input:focus {
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+
+/* ==========================
+   VALIDACIONES
+========================== */
+
+.field-error {
+  margin-top: 7px;
+
+  color: #dc2626;
+
+  font-size: 13px;
+}
+
+.login-error {
+  margin-bottom: 20px;
+  padding: 12px 14px;
+
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+
+  background: #fef2f2;
+
+  color: #b91c1c;
+
+  font-size: 14px;
+}
+
+
+/* ==========================
+   BOTON
+========================== */
+
+.login-button {
+  width: 100%;
+
+  margin-top: 8px;
+  padding: 14px 20px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #2563eb;
+
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease;
+}
+
+.login-button:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.login-button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.login-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width: 900px) {
+  .login-page {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-panel {
+    display: none;
+  }
+
+  .form-panel {
+    padding: 40px 24px;
+  }
+
+  .mobile-logo {
+    display: flex;
+  }
+}

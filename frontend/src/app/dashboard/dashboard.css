@@ -1,0 +1,72 @@
+/* ==========================
+   PAGINA
+========================== */
+
+:host {
+  display: block;
+}
+
+.dashboard-page {
+  width: 100%;
+}
+
+
+/* ==========================
+   MENSAJES
+========================== */
+
+.dashboard-message,
+.dashboard-error {
+  padding: 20px;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+}
+
+.dashboard-message {
+  color: #64748b;
+}
+
+.dashboard-error {
+  color: #b91c1c;
+
+  background: #fef2f2;
+
+  border: 1px solid #fecaca;
+}
+
+/* ==========================
+   GRID DEL DASHBOARD
+========================== */
+
+.dashboard-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 24px;
+
+  margin-top: 24px;
+
+  align-items: stretch;
+}
+
+/* ==========================
+   ACTIVIDAD HORARIA
+========================== */
+
+.dashboard-hourly {
+  margin-top: 24px;
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width: 1000px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}

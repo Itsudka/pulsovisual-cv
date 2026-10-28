@@ -1,0 +1,48 @@
+<!-- ==========================
+     PERMANENCIA POR SECTOR
+========================== -->
+
+<article class="chart-card">
+
+  <!-- ==========================
+       ENCABEZADO
+  ========================== -->
+
+  <header class="chart-header">
+
+    <div>
+      <h2>
+        Permanencia promedio por sector
+      </h2>
+
+      <p>
+        Tiempo medio de permanencia en segundos
+      </p>
+    </div>
+
+  </header>
+
+
+  <!-- ==========================
+       CONTENIDO
+  ========================== -->
+
+  @if (sectors.length > 0) {
+
+    <div class="chart-container">
+
+      <canvas
+        #dwellCanvas
+      ></canvas>
+
+    </div>
+
+  } @else {
+
+    <div class="empty-state">
+      No hay información de sectores disponible.
+    </div>
+
+  }
+
+</article>

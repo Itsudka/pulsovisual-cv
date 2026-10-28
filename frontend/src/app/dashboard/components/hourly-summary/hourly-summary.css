@@ -1,0 +1,152 @@
+/* ==========================
+   TARJETA
+========================== */
+
+.hourly-card {
+  width: 100%;
+
+  padding: 20px;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 4px 14px rgba(15, 23, 42, 0.05);
+}
+
+
+/* ==========================
+   ENCABEZADO
+========================== */
+
+.hourly-header {
+  margin-bottom: 24px;
+}
+
+.hourly-header h2 {
+  margin: 0 0 6px;
+
+  color: #0f172a;
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.hourly-header p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 13px;
+}
+
+
+/* ==========================
+   GRAFICA
+========================== */
+
+.chart-container {
+  position: relative;
+
+  width: 100%;
+  height: 230px;
+}
+
+
+/* ==========================
+   RESUMEN
+========================== */
+
+.hour-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 16px;
+
+  margin-top: 20px;
+}
+
+
+/* ==========================
+   HORA
+========================== */
+
+.hour-item {
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+
+  padding: 16px;
+
+  border-radius: 10px;
+}
+
+.hour-item strong {
+  color: #0f172a;
+
+  font-size: 24px;
+}
+
+.hour-label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.hour-tracks {
+  color: #64748b;
+
+  font-size: 12px;
+}
+
+
+/* ==========================
+   VALLE
+========================== */
+
+.valley {
+  background: #f1f5f9;
+
+  border-left: 4px solid #64748b;
+}
+
+
+/* ==========================
+   PICO
+========================== */
+
+.peak {
+  background: #eff6ff;
+
+  border-left: 4px solid #2563eb;
+}
+
+
+/* ==========================
+   SIN DATOS
+========================== */
+
+.empty-state {
+  min-height: 250px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #64748b;
+
+  font-size: 14px;
+}
+
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width: 650px) {
+  .hour-summary {
+    grid-template-columns: 1fr;
+  }
+}

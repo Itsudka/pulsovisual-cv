@@ -1,0 +1,93 @@
+<!-- ==========================
+     TARJETAS DE RESUMEN
+========================== -->
+
+<section class="summary-grid">
+
+  <!-- ==========================
+       ACTIVIDAD
+  ========================== -->
+
+  <article class="summary-card activity-card">
+
+    <span class="summary-title">
+      Actividad
+    </span>
+
+    <strong class="summary-value">
+      {{ summary().detectedTrackCount }}
+    </strong>
+
+    <span class="summary-description">
+      Tracks detectados
+    </span>
+
+  </article>
+
+
+  <!-- ==========================
+       SECTORES
+  ========================== -->
+
+  <article class="summary-card sectors-card">
+
+    <span class="summary-title">
+      Sectores
+    </span>
+
+    <strong class="summary-value">
+      {{ summary().activeSectors }}
+    </strong>
+
+    <span class="summary-description">
+      Sectores activos
+    </span>
+
+  </article>
+
+
+  <!-- ==========================
+       PERMANENCIA
+  ========================== -->
+
+  <article class="summary-card dwell-card">
+
+    <span class="summary-title">
+      Permanencia prom.
+    </span>
+
+    <strong class="summary-value">
+      {{ summary().averageDwellSeconds }}
+      <small>
+        s
+      </small>
+    </strong>
+
+    <span class="summary-description">
+      Tiempo promedio
+    </span>
+
+  </article>
+
+
+  <!-- ==========================
+       ANALISIS
+  ========================== -->
+
+  <article class="summary-card analyses-card">
+
+    <span class="summary-title">
+      Análisis
+    </span>
+
+    <strong class="summary-value">
+      {{ summary().totalAnalyses }}
+    </strong>
+
+    <span class="summary-description">
+      Análisis registrados
+    </span>
+
+  </article>
+
+</section>

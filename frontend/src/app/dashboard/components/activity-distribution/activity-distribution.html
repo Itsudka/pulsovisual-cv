@@ -1,0 +1,50 @@
+<!-- ==========================
+     DISTRIBUCION DE ACTIVIDAD
+========================== -->
+
+<article class="chart-card">
+
+  <!-- ==========================
+       ENCABEZADO
+  ========================== -->
+
+  <header class="chart-header">
+
+    <div>
+
+      <h2>
+        Distribución de actividad
+      </h2>
+
+      <p>
+        Participación de actividad por sector
+      </p>
+
+    </div>
+
+  </header>
+
+
+  <!-- ==========================
+       CONTENIDO
+  ========================== -->
+
+  @if (sectors.length > 0) {
+
+    <div class="chart-container">
+
+      <canvas
+        #distributionCanvas
+      ></canvas>
+
+    </div>
+
+  } @else {
+
+    <div class="empty-state">
+      No hay información de sectores disponible.
+    </div>
+
+  }
+
+</article>
