@@ -1,0 +1,142 @@
+<!-- ==========================
+     TARJETAS DE SECTORES
+========================== -->
+
+<section class="sector-grid">
+
+  @for (
+    sector of sectors();
+    track sector.id
+  ) {
+
+    <article class="sector-card">
+
+      <!-- ==========================
+           ENCABEZADO
+      ========================== -->
+
+      <header class="sector-header">
+
+        <div>
+
+          <h3>
+            {{ sector.name }}
+          </h3>
+
+          <span class="sector-type">
+            {{ formatType(sector.type) }}
+          </span>
+
+        </div>
+
+
+        <span
+          class="sector-status"
+          [class.active]="sector.status === 'ACTIVE'"
+          [class.review]="sector.status === 'IN_REVIEW'"
+          [class.inactive]="sector.status === 'INACTIVE'"
+        >
+          {{ formatStatus(sector.status) }}
+        </span>
+
+      </header>
+
+
+      <!-- ==========================
+           DESCRIPCION
+      ========================== -->
+
+      <p class="sector-description">
+        {{
+          sector.description ??
+          'Sin descripción registrada.'
+        }}
+      </p>
+
+
+      <!-- ==========================
+           METRICAS
+      ========================== -->
+
+      <div class="sector-metrics">
+
+        <div class="metric">
+
+          <span>
+            Análisis
+          </span>
+
+          <strong>
+            {{
+              getAnalytics(sector.id)
+                ?.analysisCount ?? 0
+            }}
+          </strong>
+
+        </div>
+
+
+        <div class="metric">
+
+          <span>
+            Permanencia prom.
+          </span>
+
+          <strong>
+            {{
+              getAnalytics(sector.id)
+                ?.averageDwellSeconds ?? 0
+            }}
+            s
+          </strong>
+
+        </div>
+
+
+        <div class="metric">
+
+          <span>
+            Actividad
+          </span>
+
+          <strong>
+            {{
+              getAnalytics(sector.id)
+                ?.detectedTrackCount ?? 0
+            }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <!-- ==========================
+           ACCIONES
+      ========================== -->
+
+      <footer class="sector-actions">
+
+        <button
+          type="button"
+          class="detail-button"
+          (click)="viewDetail(sector)"
+        >
+          Ver detalle
+        </button>
+
+        <button
+          type="button"
+          class="edit-button"
+          (click)="editSector(sector)"
+        >
+          Editar
+        </button>
+
+      </footer>
+
+    </article>
+
+  }
+
+</section>

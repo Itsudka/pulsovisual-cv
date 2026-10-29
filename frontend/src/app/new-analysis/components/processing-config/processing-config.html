@@ -1,0 +1,241 @@
+<!-- ==========================
+     CONFIGURACION
+========================== -->
+
+<div class="processing-config">
+
+  <!-- ==========================
+      VISTA PREVIA
+  ========================== -->
+
+  <div class="preview-container">
+
+    @if (videoUrl()) {
+
+      @if (previewFailed()) {
+
+        <!-- ==========================
+            PREVIEW NO COMPATIBLE
+        ========================== -->
+
+        <div class="preview-placeholder">
+
+          <div class="preview-icon">
+            !
+          </div>
+
+          <strong>
+            Vista previa no disponible
+          </strong>
+
+          <span>
+            El navegador no puede reproducir este formato,
+            pero el archivo puede procesarse.
+          </span>
+
+        </div>
+
+      } @else {
+
+        <!-- ==========================
+            VIDEO
+        ========================== -->
+
+        <video
+          [src]="videoUrl()!"
+          controls
+          (loadedmetadata)="onVideoLoaded($event)"
+          (error)="onVideoError()"
+        ></video>
+
+
+        <!-- ==========================
+            LINEA DE CRUCE
+        ========================== -->
+
+        @if (effectiveVideoHeight() > 0) {
+
+          <div
+            class="flow-line"
+            [style.top.%]="flowLineTopPercent()"
+          >
+
+            <span>
+              Línea de cruce
+            </span>
+
+          </div>
+
+        }
+
+      }
+
+    } @else {
+
+      <!-- ==========================
+          SIN VIDEO
+      ========================== -->
+
+      <div class="preview-placeholder">
+
+        <div class="preview-icon">
+          ▶
+        </div>
+
+        <strong>
+          Vista previa del video
+        </strong>
+
+        <span>
+          Selecciona un archivo para visualizarlo aquí.
+        </span>
+
+      </div>
+
+    }
+
+  </div>
+
+
+  <!-- ==========================
+      CONFIGURACION
+  ========================== -->
+
+  <div class="config-grid">
+
+    <div class="config-item">
+
+      <label for="orientation">
+        Línea de cruce
+      </label>
+
+      <select
+        id="orientation"
+        disabled
+      >
+        <option value="HORIZONTAL">
+          Horizontal
+        </option>
+      </select>
+
+    </div>
+
+
+    <div class="config-item">
+
+      <label for="tolerance">
+        Tolerancia
+      </label>
+
+      <div class="input-with-unit">
+
+        <input
+          id="tolerance"
+          type="number"
+          min="0"
+          step="1"
+          [disabled]="isProcessing()"
+          [value]="flowTolerancePx()"
+          (input)="onToleranceChange($event)"
+        />
+
+        <span>
+          px
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ==========================
+      POSICION DE LINEA
+  ========================== -->
+
+  <div class="line-position">
+
+    <div class="line-position-header">
+
+      <label for="position">
+        Posición de la línea
+      </label>
+
+      <strong>
+        {{ flowLinePosition() }} px
+      </strong>
+
+    </div>
+
+    <input
+      id="position"
+      type="range"
+      min="0"
+      step="1"
+      [max]="sliderMax()"
+      [disabled]="isProcessing()"
+      [value]="flowLinePosition()"
+      (input)="onPositionChange($event)"
+    />
+
+    @if (effectiveVideoHeight() > 0) {
+
+      <span class="video-resolution-hint">
+        Altura del video:
+        {{ effectiveVideoHeight() }} px
+      </span>
+
+    }
+
+  </div>
+
+
+  <!-- ==========================
+      ESTADO
+  ========================== -->
+
+  <div class="processing-state">
+
+    <span>
+      Estado
+    </span>
+
+    <span
+      class="ready-status"
+      [class.ready]="isReady() && !isProcessing()"
+    >
+
+      @if (isProcessing()) {
+        Procesando video...
+      } @else if (isReady()) {
+        Listo para procesar
+      } @else {
+        Completa la configuración
+      }
+
+    </span>
+
+  </div>
+
+
+  <!-- ==========================
+      BOTON
+  ========================== -->
+
+  <button
+    type="button"
+    class="process-button"
+    [disabled]="!isReady() || isProcessing()"
+    (click)="startProcessing()"
+  >
+
+    @if (isProcessing()) {
+      Procesando...
+    } @else {
+      Iniciar análisis
+    }
+
+  </button>
+
+</div>

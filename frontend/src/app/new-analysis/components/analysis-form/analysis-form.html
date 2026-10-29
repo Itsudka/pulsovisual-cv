@@ -1,0 +1,115 @@
+<!-- ==========================
+     DATOS DEL ANALISIS
+========================== -->
+
+<form
+  class="analysis-form"
+  [formGroup]="form"
+>
+
+  <!-- ==========================
+       NOMBRE
+  ========================== -->
+
+  <div class="field full">
+
+    <label for="analysisName">
+      Nombre del análisis
+    </label>
+
+    <input
+      id="analysisName"
+      type="text"
+      formControlName="name"
+      placeholder="Ej. Análisis entrada principal"
+    />
+
+    @if (
+      form.controls.name.touched &&
+      form.controls.name.invalid
+    ) {
+      <span class="field-error">
+        Ingresa un nombre para el análisis.
+      </span>
+    }
+
+  </div>
+
+
+  <!-- ==========================
+       SECTOR
+  ========================== -->
+
+  <div class="field">
+
+    <label for="sector">
+      Sector
+    </label>
+
+    <select
+      id="sector"
+      formControlName="sectorId"
+    >
+
+      <option
+        [ngValue]="0"
+      >
+        Selecciona un sector
+      </option>
+
+      @for (
+        sector of sectors();
+        track sector.id
+      ) {
+
+        <option
+          [ngValue]="sector.id"
+        >
+          {{ sector.name }}
+        </option>
+
+      }
+
+    </select>
+
+  </div>
+
+
+  <!-- ==========================
+       FECHA
+  ========================== -->
+
+  <div class="field">
+
+    <label for="date">
+      Fecha
+    </label>
+
+    <input
+      id="date"
+      type="date"
+      formControlName="date"
+    />
+
+  </div>
+
+
+  <!-- ==========================
+       HORA
+  ========================== -->
+
+  <div class="field">
+
+    <label for="time">
+      Hora
+    </label>
+
+    <input
+      id="time"
+      type="time"
+      formControlName="time"
+    />
+
+  </div>
+
+</form>

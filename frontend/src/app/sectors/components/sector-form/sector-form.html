@@ -1,0 +1,218 @@
+<!-- ==========================
+     FONDO DEL MODAL
+========================== -->
+
+<div
+  class="modal-backdrop"
+  (click)="closeModal()"
+>
+
+  <!-- ==========================
+       MODAL
+  ========================== -->
+
+  <section
+    class="modal"
+    (click)="$event.stopPropagation()"
+  >
+
+    <!-- ==========================
+         ENCABEZADO
+    ========================== -->
+
+    <header class="modal-header">
+
+      <div>
+
+        <h2>
+          @if (isEditMode()) {
+            Editar sector
+          } @else {
+            Crear sector
+          }
+        </h2>
+
+        <p>
+          @if (isEditMode()) {
+            Actualiza la información del sector seleccionado.
+          } @else {
+            Registra un nuevo espacio para realizar análisis.
+          }
+        </p>
+
+      </div>
+
+      <button
+        type="button"
+        class="close-button"
+        (click)="closeModal()"
+        [disabled]="isSaving()"
+      >
+        ×
+      </button>
+
+    </header>
+
+
+    <!-- ==========================
+         FORMULARIO
+    ========================== -->
+
+    <form
+      [formGroup]="sectorForm"
+      (ngSubmit)="submit()"
+    >
+
+      <!-- ==========================
+           NOMBRE
+      ========================== -->
+
+      <div class="field">
+
+        <label for="name">
+          Nombre
+        </label>
+
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          placeholder="Ej. Entrada principal"
+        />
+
+        @if (
+          sectorForm.controls.name.touched &&
+          sectorForm.controls.name.invalid
+        ) {
+          <span class="field-error">
+            El nombre del sector es obligatorio.
+          </span>
+        }
+
+      </div>
+
+
+      <!-- ==========================
+           DESCRIPCION
+      ========================== -->
+
+      <div class="field">
+
+        <label for="description">
+          Descripción
+        </label>
+
+        <textarea
+          id="description"
+          rows="4"
+          formControlName="description"
+          placeholder="Describe brevemente este espacio"
+        ></textarea>
+
+      </div>
+
+
+      <!-- ==========================
+           TIPO
+      ========================== -->
+
+      <div class="field">
+
+        <label for="type">
+          Tipo
+        </label>
+
+        <select
+          id="type"
+          formControlName="type"
+        >
+          <option value="ENTRADA_SALIDA">
+            Entrada / Salida
+          </option>
+
+          <option value="PASILLO">
+            Pasillo
+          </option>
+
+          <option value="CAJAS">
+            Cajas
+          </option>
+
+          <option value="OTRO">
+            Otro
+          </option>
+        </select>
+
+      </div>
+
+
+      <!-- ==========================
+           ESTADO
+      ========================== -->
+
+      @if (isEditMode()) {
+
+        <div class="field">
+
+          <label for="status">
+            Estado
+          </label>
+
+          <select
+            id="status"
+            formControlName="status"
+          >
+            <option value="ACTIVE">
+              Activo
+            </option>
+
+            <option value="IN_REVIEW">
+              En revisión
+            </option>
+
+            <option value="INACTIVE">
+              Inactivo
+            </option>
+          </select>
+
+        </div>
+
+      }
+
+
+      <!-- ==========================
+           ACCIONES
+      ========================== -->
+
+      <footer class="form-actions">
+
+        <button
+          type="button"
+          class="cancel-button"
+          (click)="closeModal()"
+          [disabled]="isSaving()"
+        >
+          Cancelar
+        </button>
+
+        <button
+          type="submit"
+          class="save-button"
+          [disabled]="isSaving()"
+        >
+          @if (isSaving()) {
+            Guardando...
+          } @else if (isEditMode()) {
+            Guardar cambios
+          } @else {
+            Crear sector
+          }
+        </button>
+
+      </footer>
+
+    </form>
+
+  </section>
+
+</div>

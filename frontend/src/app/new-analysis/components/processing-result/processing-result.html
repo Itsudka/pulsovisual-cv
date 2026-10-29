@@ -1,0 +1,117 @@
+<!-- ==========================
+     RESULTADO DEL ANALISIS
+========================== -->
+
+<section class="result-card">
+
+  <!-- ==========================
+       ENCABEZADO
+  ========================== -->
+
+  <header class="result-header">
+
+    <div>
+
+      <span class="result-status">
+        Análisis completado
+      </span>
+
+      <h2>
+        {{ result().name }}
+      </h2>
+
+      <p>
+        {{ result().sector.name }}
+      </p>
+
+    </div>
+
+  </header>
+
+
+  <!-- ==========================
+       METRICAS
+  ========================== -->
+
+  @if (metric()) {
+
+    <div class="result-metrics">
+
+      <!-- ==========================
+           TRACKS
+      ========================== -->
+
+      <article class="metric-card">
+
+        <span>
+          Tracks detectados
+        </span>
+
+        <strong>
+          {{ metric()!.detectedTrackCount }}
+        </strong>
+
+      </article>
+
+
+      <!-- ==========================
+           FLUJO ARRIBA
+      ========================== -->
+
+      <article class="metric-card">
+
+        <span>
+          Flujo hacia arriba
+        </span>
+
+        <strong>
+          {{ metric()!.flowUpCount }}
+        </strong>
+
+      </article>
+
+
+      <!-- ==========================
+           FLUJO ABAJO
+      ========================== -->
+
+      <article class="metric-card">
+
+        <span>
+          Flujo hacia abajo
+        </span>
+
+        <strong>
+          {{ metric()!.flowDownCount }}
+        </strong>
+
+      </article>
+
+
+      <!-- ==========================
+           PERMANENCIA
+      ========================== -->
+
+      <article class="metric-card">
+
+        <span>
+          Permanencia promedio
+        </span>
+
+        <strong>
+          {{ formatDwellTime() }}
+        </strong>
+
+      </article>
+
+    </div>
+
+  } @else {
+
+    <div class="no-metrics">
+      El análisis terminó, pero no se encontraron métricas asociadas.
+    </div>
+
+  }
+
+</section>

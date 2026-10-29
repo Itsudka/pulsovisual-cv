@@ -1,0 +1,77 @@
+<!-- ==========================
+     RESUMEN DE SECTORES
+========================== -->
+
+<section class="summary-grid">
+
+  <!-- ==========================
+       SECTORES REGISTRADOS
+  ========================== -->
+
+  <article class="summary-card registered-card">
+
+    <span>
+      Sectores registrados
+    </span>
+
+    <strong>
+      {{ summary().registeredSectors }}
+    </strong>
+
+  </article>
+
+
+  <!-- ==========================
+       ANALISIS ASOCIADOS
+  ========================== -->
+
+  <article class="summary-card analyses-card">
+
+    <span>
+      Análisis asociados
+    </span>
+
+    <strong>
+      {{ summary().associatedAnalyses }}
+    </strong>
+
+  </article>
+
+
+  <!-- ==========================
+       ACTIVOS
+  ========================== -->
+
+  <article class="summary-card active-card">
+
+    <span>
+      Activos
+    </span>
+
+    <strong>
+      {{ summary().activeSectors }}
+    </strong>
+
+  </article>
+
+
+  <!-- ==========================
+       PERMANENCIA
+  ========================== -->
+
+  <article class="summary-card dwell-card">
+
+    <span>
+      Permanencia prom.
+    </span>
+
+    <strong>
+      {{ summary().averageDwellSeconds }}
+      <small>
+        s
+      </small>
+    </strong>
+
+  </article>
+
+</section>

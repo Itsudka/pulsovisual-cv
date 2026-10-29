@@ -1,0 +1,214 @@
+/* ==========================
+   FONDO
+========================== */
+
+.modal-backdrop {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  background:
+    rgba(15, 23, 42, 0.55);
+}
+
+
+/* ==========================
+   MODAL
+========================== */
+
+.modal {
+  width: 100%;
+  max-width: 560px;
+
+  max-height: 90vh;
+
+  padding: 28px;
+
+  border-radius: 14px;
+
+  background: #ffffff;
+
+  overflow-y: auto;
+
+  box-shadow:
+    0 24px 60px rgba(15, 23, 42, 0.25);
+}
+
+
+/* ==========================
+   ENCABEZADO
+========================== */
+
+.modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 24px;
+
+  margin-bottom: 28px;
+}
+
+.modal-header h2 {
+  margin: 0 0 6px;
+
+  color: #0f172a;
+
+  font-size: 22px;
+}
+
+.modal-header p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 14px;
+}
+
+
+/* ==========================
+   CERRAR
+========================== */
+
+.close-button {
+  width: 36px;
+  height: 36px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #f1f5f9;
+
+  color: #475569;
+
+  font-size: 24px;
+
+  cursor: pointer;
+}
+
+
+/* ==========================
+   CAMPOS
+========================== */
+
+.field {
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 20px;
+}
+
+.field label {
+  margin-bottom: 8px;
+
+  color: #0f172a;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+
+  padding: 12px 14px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  color: #0f172a;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  outline: none;
+}
+
+.field textarea {
+  resize: vertical;
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+
+/* ==========================
+   ERROR
+========================== */
+
+.field-error {
+  margin-top: 7px;
+
+  color: #dc2626;
+
+  font-size: 12px;
+}
+
+
+/* ==========================
+   ACCIONES
+========================== */
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  gap: 12px;
+
+  margin-top: 30px;
+}
+
+.form-actions button {
+  padding: 11px 18px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.cancel-button {
+  border: 1px solid #cbd5e1;
+
+  background: #ffffff;
+
+  color: #475569;
+}
+
+.save-button {
+  border: none;
+
+  background: #2563eb;
+
+  color: #ffffff;
+}
+
+.save-button:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+button:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}

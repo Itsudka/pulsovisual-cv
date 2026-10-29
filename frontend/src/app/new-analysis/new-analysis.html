@@ -1,0 +1,132 @@
+<!-- ==========================
+     NUEVO ANALISIS
+========================== -->
+
+<div class="new-analysis-page">
+
+  <!-- ==========================
+       CONFIGURACION PRINCIPAL
+  ========================== -->
+
+  <section class="analysis-grid">
+
+    <!-- ==========================
+         COLUMNA IZQUIERDA
+    ========================== -->
+
+    <article class="analysis-panel">
+
+      <header class="panel-header">
+
+        <h2>
+          Carga de video
+        </h2>
+
+        <p>
+          Sube el video que deseas analizar
+        </p>
+
+      </header>
+
+
+      <!-- ==========================
+           CARGA DE VIDEO
+      ========================== -->
+
+      <app-video-upload
+        (videoSelected)="onVideoSelected($event)"
+      />
+
+
+      <!-- ==========================
+           DATOS DEL ANALISIS
+      ========================== -->
+
+      <app-analysis-form
+        [sectors]="sectors()"
+        (formDataChange)="onFormDataChange($event)"
+      />
+
+    </article>
+
+
+    <!-- ==========================
+         COLUMNA DERECHA
+    ========================== -->
+
+    <article class="analysis-panel">
+
+      <header class="panel-header">
+
+        <h2>
+          Vista previa y configuración
+        </h2>
+
+        <p>
+          Revisa el video y ajusta los parámetros de análisis
+        </p>
+
+      </header>
+
+
+      <!-- ==========================
+           CONFIGURACION
+      ========================== -->
+
+    <app-processing-config
+      [videoUrl]="videoUrl()"
+      [flowLinePosition]="flowLinePosition()"
+      [flowTolerancePx]="flowTolerancePx()"
+      [isReady]="isReady()"
+      [isProcessing]="isProcessing()"
+      (positionChange)="onPositionChange($event)"
+      (toleranceChange)="onToleranceChange($event)"
+      (processRequested)="startAnalysis()"
+    />
+
+    </article>
+
+  </section>
+
+
+  <!-- ==========================
+       INFORMACION
+  ========================== -->
+
+  <section class="processing-info">
+
+    El procesamiento puede tardar algunos minutos
+    según la duración del video.
+
+  </section>
+
+
+  <!-- ==========================
+       ESTADO
+  ========================== -->
+
+  <app-processing-status
+    [state]="processingState()"
+  />
+
+  <!-- ==========================
+      RESULTADO
+  ========================== -->
+
+  @if (result()) {
+
+    <app-processing-result
+      [result]="result()!"
+    />
+
+  }
+
+  @if (errorMessage()) {
+
+    <div class="processing-error">
+      {{ errorMessage() }}
+    </div>
+
+  }
+
+</div>

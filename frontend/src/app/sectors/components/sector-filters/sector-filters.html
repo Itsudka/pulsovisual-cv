@@ -1,0 +1,62 @@
+<!-- ==========================
+     FILTROS
+========================== -->
+
+<div class="filters">
+
+  <!-- ==========================
+       ESTADO
+  ========================== -->
+
+  <select
+    aria-label="Filtrar por estado"
+    (change)="onStatusChange($event)"
+  >
+    <option value="ALL">
+      Estado
+    </option>
+
+    <option value="ACTIVE">
+      Activo
+    </option>
+
+    <option value="IN_REVIEW">
+      En revisión
+    </option>
+
+    <option value="INACTIVE">
+      Inactivo
+    </option>
+  </select>
+
+
+  <!-- ==========================
+       TIPO
+  ========================== -->
+
+  <select
+    aria-label="Filtrar por tipo"
+    (change)="onTypeChange($event)"
+  >
+    <option value="ALL">
+      Tipo
+    </option>
+
+    <option value="ENTRADA_SALIDA">
+      Entrada / Salida
+    </option>
+
+    <option value="PASILLO">
+      Pasillo
+    </option>
+
+    <option value="CAJAS">
+      Cajas
+    </option>
+
+    <option value="OTRO">
+      Otro
+    </option>
+  </select>
+
+</div>

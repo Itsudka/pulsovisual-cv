@@ -1,0 +1,164 @@
+/* ==========================
+   CONTENEDOR
+========================== */
+
+.sectors-card {
+  width: 100%;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 4px 14px rgba(15, 23, 42, 0.04);
+}
+
+
+/* ==========================
+   TABLA
+========================== */
+
+.table-container {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+
+  border-collapse: collapse;
+}
+
+thead {
+  background: #f8fafc;
+}
+
+th,
+td {
+  padding: 16px 20px;
+
+  border-bottom: 1px solid #e2e8f0;
+
+  text-align: left;
+}
+
+th {
+  color: #64748b;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+td {
+  color: #475569;
+
+  font-size: 14px;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr:hover {
+  background: #f8fafc;
+}
+
+.sector-name {
+  color: #0f172a;
+
+  font-weight: 600;
+}
+
+
+/* ==========================
+   ESTADO
+========================== */
+
+.status {
+  display: inline-flex;
+
+  padding: 5px 10px;
+
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status.active {
+  background: #dcfce7;
+
+  color: #15803d;
+}
+
+.status.review {
+  background: #fef3c7;
+
+  color: #b45309;
+}
+
+.status.inactive {
+  background: #f1f5f9;
+
+  color: #64748b;
+}
+
+
+/* ==========================
+   ACCIONES
+========================== */
+
+.action-button {
+  padding: 7px 12px;
+
+  border: 1px solid #bfdbfe;
+  border-radius: 7px;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.action-button:hover {
+  background: #dbeafe;
+}
+
+
+/* ==========================
+   SIN DATOS
+========================== */
+
+.empty-state {
+  padding: 70px 30px;
+
+  text-align: center;
+}
+
+.empty-state h3 {
+  margin: 0 0 8px;
+
+  color: #0f172a;
+
+  font-size: 18px;
+}
+
+.empty-state p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 14px;
+}

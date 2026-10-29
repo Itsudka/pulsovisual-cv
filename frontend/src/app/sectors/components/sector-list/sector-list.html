@@ -1,0 +1,118 @@
+<!-- ==========================
+     LISTADO DE SECTORES
+========================== -->
+
+<div class="sectors-card">
+
+  @if (sectors().length > 0) {
+
+    <!-- ==========================
+         TABLA
+    ========================== -->
+
+    <div class="table-container">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>
+              Nombre
+            </th>
+
+            <th>
+              Tipo
+            </th>
+
+            <th>
+              Descripción
+            </th>
+
+            <th>
+              Estado
+            </th>
+
+            <th>
+              Acciones
+            </th>
+          </tr>
+        </thead>
+
+
+        <tbody>
+
+          @for (
+            sector of sectors();
+            track sector.id
+          ) {
+
+            <tr>
+
+              <td class="sector-name">
+                {{ sector.name }}
+              </td>
+
+              <td>
+                {{ sector.type }}
+              </td>
+
+              <td>
+                {{ sector.description ?? 'Sin descripción' }}
+              </td>
+
+              <td>
+
+                <span
+                  class="status"
+                  [class.active]="sector.status === 'ACTIVE'"
+                  [class.review]="sector.status === 'IN_REVIEW'"
+                  [class.inactive]="sector.status === 'INACTIVE'"
+                >
+                  {{ sector.status }}
+                </span>
+
+              </td>
+
+              <td>
+
+                <button
+                  type="button"
+                  class="action-button"
+                  (click)="viewDetail(sector)"
+                >
+                  Ver
+                </button>
+
+              </td>
+
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  } @else {
+
+    <!-- ==========================
+         SIN SECTORES
+    ========================== -->
+
+    <div class="empty-state">
+
+      <h3>
+        No hay sectores registrados
+      </h3>
+
+      <p>
+        Crea tu primer sector para comenzar a analizar tus espacios.
+      </p>
+
+    </div>
+
+  }
+
+</div>

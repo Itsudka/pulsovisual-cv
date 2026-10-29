@@ -1,0 +1,167 @@
+<!-- ==========================
+     FONDO DEL MODAL
+========================== -->
+
+<div
+  class="modal-backdrop"
+  (click)="closeModal()"
+>
+
+  <!-- ==========================
+       MODAL
+  ========================== -->
+
+  <section
+    class="modal"
+    (click)="$event.stopPropagation()"
+  >
+
+    <!-- ==========================
+         ENCABEZADO
+    ========================== -->
+
+    <header class="modal-header">
+
+      <div>
+
+        <h2>
+          {{ sector().name }}
+        </h2>
+
+        <p>
+          {{ formatType(sector().type) }}
+        </p>
+
+      </div>
+
+      <span
+        class="sector-status"
+        [class.active]="sector().status === 'ACTIVE'"
+        [class.review]="sector().status === 'IN_REVIEW'"
+        [class.inactive]="sector().status === 'INACTIVE'"
+      >
+        {{ formatStatus(sector().status) }}
+      </span>
+
+    </header>
+
+
+    <!-- ==========================
+         DESCRIPCION
+    ========================== -->
+
+    <div class="detail-section">
+
+      <span class="detail-label">
+        Descripción
+      </span>
+
+      <p>
+        {{
+          sector().description ??
+          'Sin descripción registrada.'
+        }}
+      </p>
+
+    </div>
+
+
+    <!-- ==========================
+         METRICAS
+    ========================== -->
+
+    <div class="metrics-grid">
+
+      <div class="metric">
+
+        <span>
+          Análisis
+        </span>
+
+        <strong>
+          {{ analytics()?.analysisCount ?? 0 }}
+        </strong>
+
+      </div>
+
+
+      <div class="metric">
+
+        <span>
+          Actividad
+        </span>
+
+        <strong>
+          {{ analytics()?.detectedTrackCount ?? 0 }}
+        </strong>
+
+      </div>
+
+
+      <div class="metric">
+
+        <span>
+          Permanencia prom.
+        </span>
+
+        <strong>
+          {{
+            analytics()?.averageDwellSeconds ?? 0
+          }}
+          s
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- ==========================
+         ADVERTENCIA
+    ========================== -->
+
+    @if (!canDelete()) {
+
+      <div class="delete-warning">
+
+        Este sector tiene análisis asociados y no puede
+        eliminarse desde esta pantalla.
+
+      </div>
+
+    }
+
+
+    <!-- ==========================
+         ACCIONES
+    ========================== -->
+
+    <footer class="modal-actions">
+
+      <button
+        type="button"
+        class="delete-button"
+        [disabled]="!canDelete() || isDeleting()"
+        (click)="deleteSector()"
+      >
+        @if (isDeleting()) {
+          Eliminando...
+        } @else {
+          Eliminar sector
+        }
+      </button>
+
+      <button
+        type="button"
+        class="close-button"
+        [disabled]="isDeleting()"
+        (click)="closeModal()"
+      >
+        Cerrar
+      </button>
+
+    </footer>
+
+  </section>
+
+</div>

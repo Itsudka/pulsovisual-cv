@@ -1,0 +1,42 @@
+/* ==========================
+   FILTROS
+========================== */
+
+.filters {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+}
+
+
+/* ==========================
+   SELECT
+========================== */
+
+select {
+  min-width: 140px;
+
+  padding: 10px 14px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #0f172a;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  outline: none;
+
+  cursor: pointer;
+}
+
+select:focus {
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 3px rgba(37, 99, 235, 0.1);
+}

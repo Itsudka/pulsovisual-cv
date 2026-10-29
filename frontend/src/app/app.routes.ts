@@ -3,7 +3,9 @@ import { Routes } from '@angular/router';
 import { authGuard } from './auth/auth.guard';
 import { Login } from './auth/login/login';
 import { Dashboard } from './dashboard/dashboard';
+import { Sectors } from './sectors/sectors';
 import { Layout } from './layout/layout';
+import { NewAnalysis } from './new-analysis/new-analysis';
 
 export const routes: Routes = [
   // ==========================
@@ -39,6 +41,25 @@ export const routes: Routes = [
         data: {
           title: 'Dashboard',
           subtitle: 'Visualiza la actividad de tus sectores',
+        },
+      },
+
+      {
+        path: 'sectors',
+        component: Sectors,
+        data: {
+          title: 'Sectores',
+          subtitle: 'Administra los espacios de análisis',
+        },
+      },
+
+      {
+        path: 'new-analysis',
+        component: NewAnalysis,
+        data: {
+          title: 'Nuevo análisis',
+          subtitle:
+            'Carga un video, asígnalo a un sector y configura el procesamiento',
         },
       },
     ],

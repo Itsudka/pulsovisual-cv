@@ -1,0 +1,120 @@
+/* ==========================
+   PAGINA
+========================== */
+
+:host {
+  display: block;
+}
+
+.new-analysis-page {
+  width: 100%;
+}
+
+
+/* ==========================
+   GRID PRINCIPAL
+========================== */
+
+.analysis-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 24px;
+}
+
+
+/* ==========================
+   PANEL
+========================== */
+
+.analysis-panel {
+  padding: 24px;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 4px 14px rgba(15, 23, 42, 0.04);
+}
+
+
+/* ==========================
+   ENCABEZADO
+========================== */
+
+.panel-header {
+  margin-bottom: 22px;
+}
+
+.panel-header h2 {
+  margin: 0 0 6px;
+
+  color: #0f172a;
+
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.panel-header p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 13px;
+}
+
+
+/* ==========================
+   INFORMACION
+========================== */
+
+.processing-info {
+  margin-top: 24px;
+
+  padding: 18px 24px;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #64748b;
+
+  font-size: 13px;
+
+  text-align: center;
+}
+
+/* ==========================
+   ERROR DE PROCESAMIENTO
+========================== */
+
+.processing-error {
+  margin-top: 20px;
+
+  padding: 14px 18px;
+
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+
+  background: #fef2f2;
+
+  color: #b91c1c;
+
+  font-size: 14px;
+}
+
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width: 1050px) {
+  .analysis-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,67 @@
+<!-- ==========================
+     CARGA DE VIDEO
+========================== -->
+
+<div class="upload-area">
+
+  <div class="upload-content">
+
+    @if (selectedFileName()) {
+
+      <!-- ==========================
+           VIDEO SELECCIONADO
+      ========================== -->
+
+      <strong>
+        Video seleccionado
+      </strong>
+
+      <span class="selected-file">
+        {{ selectedFileName() }}
+      </span>
+
+      <label
+        for="video"
+        class="upload-button"
+      >
+        Cambiar archivo
+      </label>
+
+    } @else {
+
+      <!-- ==========================
+           SIN VIDEO
+      ========================== -->
+
+      <strong>
+        Haz clic para cargar
+      </strong>
+
+      <span>
+        Formatos sugeridos: MP4, AVI, MPG
+      </span>
+
+      <label
+        for="video"
+        class="upload-button"
+      >
+        Seleccionar archivo
+      </label>
+
+    }
+
+
+    <!-- ==========================
+         INPUT
+    ========================== -->
+
+    <input
+      id="video"
+      type="file"
+      accept="video/*"
+      (change)="onFileSelected($event)"
+    />
+
+  </div>
+
+</div>

@@ -1,0 +1,107 @@
+<!-- ==========================
+     SECTORES
+========================== -->
+
+<div class="sectors-page">
+
+  <!-- ==========================
+       HERRAMIENTAS
+  ========================== -->
+
+  <div class="sectors-toolbar">
+
+    <button
+      type="button"
+      class="create-button"
+      (click)="openCreateForm()"
+    >
+      + Crear sector
+    </button>
+
+
+    <app-sector-filters
+      (statusChange)="onStatusChange($event)"
+      (typeChange)="onTypeChange($event)"
+    />
+
+  </div>
+
+
+  <!-- ==========================
+       CARGANDO
+  ========================== -->
+
+  @if (isLoading()) {
+
+    <div class="page-message">
+      Cargando sectores...
+    </div>
+
+  } @else if (errorMessage()) {
+
+    <div class="page-error">
+      {{ errorMessage() }}
+    </div>
+
+  } @else {
+
+    <!-- ==========================
+         RESUMEN
+    ========================== -->
+
+    <app-sector-summary
+      [summary]="summary()"
+    />
+
+
+    <app-sector-cards
+      [sectors]="filteredSectors()"
+      [analytics]="analytics()"
+      (edit)="openEditForm($event)"
+      (detail)="openDetail($event)"
+    />
+
+    <!-- ==========================
+        FORMULARIO
+    ========================== -->
+
+    @if (isFormOpen()) {
+
+      <app-sector-form
+        [sector]="selectedSector()"
+        [isSaving]="isSaving()"
+        (close)="closeForm()"
+        (create)="createSector($event)"
+        (update)="updateSector($event)"
+      />
+
+    }
+
+    <!-- ==========================
+         SECTORES RECIENTES
+    ========================== -->
+
+    <app-sector-list
+      [sectors]="filteredSectors()"
+      (detail)="openDetail($event)"
+    />
+
+    <!-- ==========================
+        DETALLE DE SECTOR
+    ========================== -->
+
+    @if (detailSector(); as sector) {
+
+      <app-sector-detail
+        [sector]="sector"
+        [analytics]="detailAnalytics()"
+        [isDeleting]="isDeleting()"
+        (close)="closeDetail()"
+        (delete)="deleteSector($event)"
+      />
+
+    }
+
+  }
+
+</div>

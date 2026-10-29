@@ -1,0 +1,204 @@
+/* ==========================
+   TARJETA
+========================== */
+
+.status-card {
+  width: 100%;
+
+  margin-top: 24px;
+  padding: 24px;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 4px 14px rgba(15, 23, 42, 0.04);
+}
+
+
+/* ==========================
+   ENCABEZADO
+========================== */
+
+.status-header {
+  margin-bottom: 24px;
+}
+
+.status-header h2 {
+  margin: 0 0 6px;
+
+  color: #0f172a;
+
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.status-header p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 13px;
+}
+
+
+/* ==========================
+   LISTA
+========================== */
+
+.status-list {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+
+/* ==========================
+   PASO
+========================== */
+
+.status-item {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  min-height: 82px;
+
+  padding: 14px;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+
+  background: #f8fafc;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+
+/* ==========================
+   INDICADOR
+========================== */
+
+.status-indicator {
+  width: 34px;
+  height: 34px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #e2e8f0;
+
+  color: #64748b;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+/* ==========================
+   CONTENIDO
+========================== */
+
+.status-content {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.status-content strong {
+  color: #0f172a;
+
+  font-size: 13px;
+}
+
+.status-content span {
+  color: #64748b;
+
+  font-size: 11px;
+}
+
+
+/* ==========================
+   ACTIVO
+========================== */
+
+.status-item.active {
+  border-color: #06b6d4;
+
+  background: #ecfeff;
+}
+
+.status-item.active .status-indicator {
+  background: #06b6d4;
+
+  color: #ffffff;
+}
+
+
+/* ==========================
+   COMPLETADO
+========================== */
+
+.status-item.completed {
+  border-color: #bbf7d0;
+
+  background: #f0fdf4;
+}
+
+.status-item.completed .status-indicator {
+  background: #22c55e;
+
+  color: #ffffff;
+}
+
+
+/* ==========================
+   ERROR
+========================== */
+
+.error-message {
+  margin-top: 18px;
+
+  padding: 12px 14px;
+
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+
+  background: #fef2f2;
+
+  color: #b91c1c;
+
+  font-size: 13px;
+}
+
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width: 1200px) {
+  .status-list {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 650px) {
+  .status-list {
+    grid-template-columns: 1fr;
+  }
+}

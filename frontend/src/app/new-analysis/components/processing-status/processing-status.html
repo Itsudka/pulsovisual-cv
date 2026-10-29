@@ -1,0 +1,182 @@
+<!-- ==========================
+     ESTADO DEL ANALISIS
+========================== -->
+
+<section class="status-card">
+
+  <!-- ==========================
+       ENCABEZADO
+  ========================== -->
+
+  <header class="status-header">
+
+    <h2>
+      Estado del análisis
+    </h2>
+
+    <p>
+      Seguimiento del procesamiento del video
+    </p>
+
+  </header>
+
+
+  <!-- ==========================
+       PASOS
+  ========================== -->
+
+  <div class="status-list">
+
+    <!-- ==========================
+         VIDEO CARGADO
+    ========================== -->
+
+    <div
+      class="status-item"
+      [class.completed]="isVideoLoaded()"
+    >
+
+      <div class="status-indicator">
+        @if (isVideoLoaded()) {
+          ✓
+        } @else {
+          1
+        }
+      </div>
+
+      <div class="status-content">
+
+        <strong>
+          Video cargado
+        </strong>
+
+        <span>
+          Archivo listo para ser procesado
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- ==========================
+         DETECCION
+    ========================== -->
+
+    <div
+      class="status-item"
+      [class.active]="isProcessing()"
+      [class.completed]="areMetricsGenerated()"
+    >
+
+      <div class="status-indicator">
+
+        @if (areMetricsGenerated()) {
+          ✓
+        } @else {
+          2
+        }
+
+      </div>
+
+      <div class="status-content">
+
+        <strong>
+          Procesando detección y seguimiento
+        </strong>
+
+        <span>
+          Análisis de personas y trayectorias
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- ==========================
+         METRICAS
+    ========================== -->
+
+    <div
+      class="status-item"
+      [class.completed]="areMetricsGenerated()"
+    >
+
+      <div class="status-indicator">
+
+        @if (areMetricsGenerated()) {
+          ✓
+        } @else {
+          3
+        }
+
+      </div>
+
+      <div class="status-content">
+
+        <strong>
+          Generando métricas
+        </strong>
+
+        <span>
+          Conteo, flujo y permanencia
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- ==========================
+         GUARDAR RESULTADOS
+    ========================== -->
+
+    <div
+      class="status-item"
+      [class.completed]="areResultsSaved()"
+    >
+
+      <div class="status-indicator">
+
+        @if (areResultsSaved()) {
+          ✓
+        } @else {
+          4
+        }
+
+      </div>
+
+      <div class="status-content">
+
+        <strong>
+          Guardando resultados
+        </strong>
+
+        <span>
+          Registro de métricas del análisis
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ==========================
+       ERROR
+  ========================== -->
+
+  @if (hasFailed()) {
+
+    <div class="error-message">
+
+      No fue posible completar el análisis.
+      Revisa el archivo e intenta nuevamente.
+
+    </div>
+
+  }
+
+</section>
