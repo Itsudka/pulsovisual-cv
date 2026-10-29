@@ -1,0 +1,200 @@
+<!-- ==========================
+     TABLA
+========================== -->
+
+<div class="table-wrapper">
+
+  @if (analyses().length === 0) {
+
+    <!-- ==========================
+         SIN RESULTADOS
+    ========================== -->
+
+    <div class="empty-state">
+
+      <strong>
+        No se encontraron análisis
+      </strong>
+
+      <span>
+        Intenta cambiar o limpiar los filtros de búsqueda.
+      </span>
+
+    </div>
+
+  } @else {
+
+    <table class="history-table">
+
+      <!-- ==========================
+           ENCABEZADO
+      ========================== -->
+
+      <thead>
+
+        <tr>
+
+          <th>
+            Nombre del análisis
+          </th>
+
+          <th>
+            Sector
+          </th>
+
+          <th>
+            Fecha de grabación
+          </th>
+
+          <th>
+            Fecha de análisis
+          </th>
+
+          <th>
+            Estado
+          </th>
+
+          <th class="actions-column">
+            Acciones
+          </th>
+
+        </tr>
+
+      </thead>
+
+
+      <!-- ==========================
+           FILAS
+      ========================== -->
+
+      <tbody>
+
+        @for (
+          analysis of analyses();
+          track analysis.id
+        ) {
+
+          <tr>
+
+            <!-- ==========================
+                 NOMBRE
+            ========================== -->
+
+            <td>
+
+              <div class="analysis-name">
+
+                <strong>
+                  {{ analysis.name }}
+                </strong>
+
+                <span>
+                  #{{ analysis.id }}
+                </span>
+
+              </div>
+
+            </td>
+
+
+            <!-- ==========================
+                 SECTOR
+            ========================== -->
+
+            <td>
+
+              {{ analysis.sector?.name ?? '—' }}
+
+            </td>
+
+
+            <!-- ==========================
+                 FECHA GRABACION
+            ========================== -->
+
+            <td>
+
+              {{
+                analysis.recordedAt
+                  | date:'dd/MM/yyyy HH:mm'
+              }}
+
+            </td>
+
+
+            <!-- ==========================
+                 FECHA ANALISIS
+            ========================== -->
+
+            <td>
+
+              @if (analysis.processedAt) {
+
+                {{
+                  analysis.processedAt
+                    | date:'dd/MM/yyyy HH:mm'
+                }}
+
+              } @else {
+
+                <span class="empty-value">
+                  —
+                </span>
+
+              }
+
+            </td>
+
+
+            <!-- ==========================
+                 ESTADO
+            ========================== -->
+
+            <td>
+
+              <span
+                class="status-badge"
+                [class]="
+                  'status-badge ' +
+                  getStatusClass(
+                    analysis.status
+                  )
+                "
+              >
+                {{
+                  getStatusLabel(
+                    analysis.status
+                  )
+                }}
+              </span>
+
+            </td>
+
+
+            <!-- ==========================
+                 ACCIONES
+            ========================== -->
+
+            <td class="actions-column">
+
+              <button
+                type="button"
+                class="detail-button"
+                (click)="showDetail(analysis)"
+              >
+                Ver detalle
+              </button>
+
+            </td>
+
+          </tr>
+
+        }
+
+      </tbody>
+
+    </table>
+
+  }
+
+</div>

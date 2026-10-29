@@ -1,0 +1,145 @@
+<form
+  class="filters-form"
+  [formGroup]="form"
+  (ngSubmit)="applyFilters()"
+>
+
+  <!-- ==========================
+       SECTOR
+  ========================== -->
+
+  <div class="filter-field">
+
+    <label for="sector">
+      Sector
+    </label>
+
+    <select
+      id="sector"
+      formControlName="sectorId"
+    >
+
+      <option [ngValue]="0">
+        Todos los sectores
+      </option>
+
+      @for (
+        sector of sectors();
+        track sector.id
+      ) {
+
+        <option
+          [ngValue]="sector.id"
+        >
+          {{ sector.name }}
+        </option>
+
+      }
+
+    </select>
+
+  </div>
+
+
+  <!-- ==========================
+       DESDE
+  ========================== -->
+
+  <div class="filter-field">
+
+    <label for="dateFrom">
+      Desde
+    </label>
+
+    <input
+      id="dateFrom"
+      type="date"
+      formControlName="dateFrom"
+    />
+
+  </div>
+
+
+  <!-- ==========================
+       HASTA
+  ========================== -->
+
+  <div class="filter-field">
+
+    <label for="dateTo">
+      Hasta
+    </label>
+
+    <input
+      id="dateTo"
+      type="date"
+      formControlName="dateTo"
+    />
+
+  </div>
+
+
+  <!-- ==========================
+       ESTADO
+  ========================== -->
+
+  <div class="filter-field">
+
+    <label for="status">
+      Estado
+    </label>
+
+    <select
+      id="status"
+      formControlName="status"
+    >
+
+      <option value="">
+        Todos
+      </option>
+
+      <option value="COMPLETED">
+        Completado
+      </option>
+
+      <option value="PROCESSING">
+        Procesando
+      </option>
+
+      <option value="PENDING">
+        Pendiente
+      </option>
+
+      <option value="FAILED">
+        Error
+      </option>
+
+    </select>
+
+  </div>
+
+
+  <!-- ==========================
+       BOTONES
+  ========================== -->
+
+  <div class="filter-actions">
+
+    <button
+      type="submit"
+      class="apply-button"
+    >
+      Aplicar filtros
+    </button>
+
+    <button
+      type="button"
+      class="clear-button"
+      (click)="clearFilters()"
+    >
+      Limpiar
+    </button>
+
+  </div>
+
+</form>

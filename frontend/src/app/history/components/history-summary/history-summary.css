@@ -1,0 +1,107 @@
+/* ==========================
+   RESUMEN
+========================== */
+
+.summary-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+
+/* ==========================
+   TARJETAS
+========================== */
+
+.summary-card {
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+
+  min-height: 94px;
+
+  padding: 18px 20px;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 4px 14px rgba(15, 23, 42, 0.04);
+}
+
+
+/* ==========================
+   ICONOS
+========================== */
+
+.summary-icon {
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.summary-icon.blue {
+  background: #2563eb;
+}
+
+.summary-icon.green {
+  background: #22c55e;
+}
+
+.summary-icon.cyan {
+  background: #06b6d4;
+}
+
+
+/* ==========================
+   CONTENIDO
+========================== */
+
+.summary-content {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.summary-content strong {
+  color: #0f172a;
+
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.summary-content span {
+  color: #64748b;
+
+  font-size: 12px;
+}
+
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width: 900px) {
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,145 @@
+/* ==========================
+   FORMULARIO
+========================== */
+
+.filters-form {
+  display: grid;
+
+  grid-template-columns:
+    minmax(180px, 1.3fr)
+    minmax(150px, 1fr)
+    minmax(150px, 1fr)
+    minmax(160px, 1fr)
+    auto;
+
+  gap: 14px;
+
+  align-items: end;
+}
+
+
+/* ==========================
+   CAMPOS
+========================== */
+
+.filter-field {
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+.filter-field label {
+  color: #0f172a;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.filter-field input,
+.filter-field select {
+  width: 100%;
+
+  min-height: 42px;
+
+  padding: 9px 11px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #0f172a;
+
+  font-family: inherit;
+  font-size: 13px;
+
+  outline: none;
+}
+
+.filter-field input:focus,
+.filter-field select:focus {
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+
+/* ==========================
+   BOTONES
+========================== */
+
+.filter-actions {
+  display: flex;
+
+  gap: 10px;
+}
+
+.apply-button,
+.clear-button {
+  min-height: 42px;
+
+  padding: 0 18px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.apply-button {
+  border: 1px solid #2563eb;
+
+  background: #2563eb;
+
+  color: #ffffff;
+}
+
+.apply-button:hover {
+  background: #1d4ed8;
+}
+
+.clear-button {
+  border: 1px solid #2563eb;
+
+  background: #ffffff;
+
+  color: #2563eb;
+}
+
+.clear-button:hover {
+  background: #eff6ff;
+}
+
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width: 1200px) {
+  .filters-form {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .filter-actions {
+    grid-column:
+      1 / -1;
+  }
+}
+
+@media (max-width: 650px) {
+  .filters-form {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-actions {
+    grid-column: auto;
+
+    flex-direction: column;
+  }
+}

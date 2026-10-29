@@ -1,0 +1,388 @@
+<!-- ==========================
+     FONDO DEL MODAL
+========================== -->
+
+<div
+  class="modal-backdrop"
+  (click)="close()"
+>
+
+  <!-- ==========================
+       MODAL
+  ========================== -->
+
+  <section
+    class="detail-modal"
+    (click)="$event.stopPropagation()"
+  >
+
+    <!-- ==========================
+         ENCABEZADO
+    ========================== -->
+
+    <header class="modal-header">
+
+      <div>
+
+        <span
+          class="status-badge"
+          [class]="
+            'status-badge ' +
+            getStatusClass()
+          "
+        >
+          {{ getStatusLabel() }}
+        </span>
+
+        <h2>
+          {{ analysis().name }}
+        </h2>
+
+        <p>
+          Detalle del análisis
+          #{{ analysis().id }}
+        </p>
+
+      </div>
+
+      <button
+        type="button"
+        class="close-button"
+        (click)="close()"
+        aria-label="Cerrar"
+      >
+        ×
+      </button>
+
+    </header>
+
+
+    <!-- ==========================
+         INFORMACION GENERAL
+    ========================== -->
+
+    <section class="detail-section">
+
+      <h3>
+        Información general
+      </h3>
+
+      <div class="info-grid">
+
+        <div class="info-item">
+
+          <span>
+            Sector
+          </span>
+
+          <strong>
+            {{
+              analysis().sector?.name
+                ?? '—'
+            }}
+          </strong>
+
+        </div>
+
+
+        <div class="info-item">
+
+          <span>
+            Archivo original
+          </span>
+
+          <strong>
+            {{
+              analysis().originalFilename
+            }}
+          </strong>
+
+        </div>
+
+
+        <div class="info-item">
+
+          <span>
+            Fecha de grabación
+          </span>
+
+          <strong>
+            {{
+              analysis().recordedAt
+                | date:'dd/MM/yyyy HH:mm'
+            }}
+          </strong>
+
+        </div>
+
+
+        <div class="info-item">
+
+          <span>
+            Fecha de análisis
+          </span>
+
+          <strong>
+
+            @if (
+              analysis().processedAt
+            ) {
+
+              {{
+                analysis().processedAt
+                  | date:'dd/MM/yyyy HH:mm'
+              }}
+
+            } @else {
+
+              —
+
+            }
+
+          </strong>
+
+        </div>
+
+
+        <div class="info-item">
+
+          <span>
+            Duración del video
+          </span>
+
+          <strong>
+
+            @if (
+              analysis().videoDurationSeconds
+              !== null
+            ) {
+
+              {{
+                analysis()
+                  .videoDurationSeconds
+              }}
+              s
+
+            } @else {
+
+              —
+
+            }
+
+          </strong>
+
+        </div>
+
+
+        <div class="info-item">
+
+          <span>
+            Estado
+          </span>
+
+          <strong>
+            {{ getStatusLabel() }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==========================
+         CONFIGURACION
+    ========================== -->
+
+    <section class="detail-section">
+
+      <h3>
+        Configuración del procesamiento
+      </h3>
+
+      <div class="info-grid">
+
+        <div class="info-item">
+
+          <span>
+            Orientación
+          </span>
+
+          <strong>
+            {{
+              analysis()
+                .flowLineOrientation
+            }}
+          </strong>
+
+        </div>
+
+
+        <div class="info-item">
+
+          <span>
+            Posición de la línea
+          </span>
+
+          <strong>
+            {{
+              analysis()
+                .flowLinePosition
+            }}
+            px
+          </strong>
+
+        </div>
+
+
+        <div class="info-item">
+
+          <span>
+            Tolerancia
+          </span>
+
+          <strong>
+            {{
+              analysis()
+                .flowTolerancePx
+            }}
+            px
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==========================
+         METRICAS
+    ========================== -->
+
+    <section class="detail-section">
+
+      <h3>
+        Métricas obtenidas
+      </h3>
+
+
+      @if (analysis().metric) {
+
+        <div class="metrics-grid">
+
+          <!-- ==========================
+               TRACKS
+          ========================== -->
+
+          <article class="metric-card">
+
+            <span>
+              Tracks detectados
+            </span>
+
+            <strong>
+              {{
+                analysis()
+                  .metric!
+                  .detectedTrackCount
+              }}
+            </strong>
+
+          </article>
+
+
+          <!-- ==========================
+               FLUJO ARRIBA
+          ========================== -->
+
+          <article class="metric-card">
+
+            <span>
+              Flujo hacia arriba
+            </span>
+
+            <strong>
+              {{
+                analysis()
+                  .metric!
+                  .flowUpCount
+              }}
+            </strong>
+
+          </article>
+
+
+          <!-- ==========================
+               FLUJO ABAJO
+          ========================== -->
+
+          <article class="metric-card">
+
+            <span>
+              Flujo hacia abajo
+            </span>
+
+            <strong>
+              {{
+                analysis()
+                  .metric!
+                  .flowDownCount
+              }}
+            </strong>
+
+          </article>
+
+
+          <!-- ==========================
+               PERMANENCIA
+          ========================== -->
+
+          <article class="metric-card">
+
+            <span>
+              Permanencia promedio
+            </span>
+
+            <strong>
+              {{ getAverageDwell() }}
+            </strong>
+
+          </article>
+
+        </div>
+
+      } @else {
+
+        <div class="no-metrics">
+
+          Este análisis todavía no tiene
+          métricas disponibles.
+
+        </div>
+
+      }
+
+    </section>
+
+
+    <!-- ==========================
+         PIE DEL MODAL
+    ========================== -->
+
+    <footer class="modal-footer">
+
+      <button
+        type="button"
+        class="close-footer-button"
+        (click)="close()"
+      >
+        Cerrar
+      </button>
+
+    </footer>
+
+  </section>
+
+</div>

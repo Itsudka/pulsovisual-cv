@@ -6,6 +6,7 @@ import { Dashboard } from './dashboard/dashboard';
 import { Sectors } from './sectors/sectors';
 import { Layout } from './layout/layout';
 import { NewAnalysis } from './new-analysis/new-analysis';
+import {History,} from './history/history';
 
 export const routes: Routes = [
   // ==========================
@@ -60,6 +61,16 @@ export const routes: Routes = [
           title: 'Nuevo análisis',
           subtitle:
             'Carga un video, asígnalo a un sector y configura el procesamiento',
+        },
+      },
+
+      {
+        path: 'history',
+        component: History,
+        data: {
+          title: 'Historial',
+          subtitle:
+            'Consulta y compara los análisis realizados',
         },
       },
     ],

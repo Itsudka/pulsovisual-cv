@@ -1,0 +1,81 @@
+<!-- ==========================
+     RESUMEN
+========================== -->
+
+<section class="summary-grid">
+
+  <!-- ==========================
+       ANALISIS REALIZADOS
+  ========================== -->
+
+  <article class="summary-card">
+
+    <div class="summary-icon blue">
+      A
+    </div>
+
+    <div class="summary-content">
+
+      <strong>
+        {{ summary().totalAnalyses }}
+      </strong>
+
+      <span>
+        Análisis realizados
+      </span>
+
+    </div>
+
+  </article>
+
+
+  <!-- ==========================
+       SECTORES
+  ========================== -->
+
+  <article class="summary-card">
+
+    <div class="summary-icon green">
+      S
+    </div>
+
+    <div class="summary-content">
+
+      <strong>
+        {{ summary().registeredSectors }}
+      </strong>
+
+      <span>
+        Sectores registrados
+      </span>
+
+    </div>
+
+  </article>
+
+
+  <!-- ==========================
+       COMPLETADOS
+  ========================== -->
+
+  <article class="summary-card">
+
+    <div class="summary-icon cyan">
+      ✓
+    </div>
+
+    <div class="summary-content">
+
+      <strong>
+        {{ summary().completedAnalyses }}
+      </strong>
+
+      <span>
+        Análisis completados
+      </span>
+
+    </div>
+
+  </article>
+
+</section>

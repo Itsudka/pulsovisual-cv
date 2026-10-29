@@ -1,0 +1,160 @@
+/* ==========================
+   PAGINA
+========================== */
+
+.history-page {
+  display: flex;
+  flex-direction: column;
+
+  gap: 24px;
+}
+
+
+/* ==========================
+   PANELES
+========================== */
+
+.history-panel {
+  padding: 24px;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 4px 14px rgba(15, 23, 42, 0.04);
+}
+
+
+/* ==========================
+   ENCABEZADO
+========================== */
+
+.panel-header {
+  margin-bottom: 22px;
+}
+
+.panel-header h2 {
+  margin: 0 0 6px;
+
+  color: #0f172a;
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.panel-header p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 13px;
+}
+
+
+/* ==========================
+   MENSAJES
+========================== */
+
+.history-message {
+  padding: 16px;
+
+  border-radius: 8px;
+
+  background: #f8fafc;
+
+  color: #64748b;
+
+  font-size: 13px;
+}
+
+.history-message.error {
+  border: 1px solid #fecaca;
+
+  background: #fef2f2;
+
+  color: #b91c1c;
+}
+
+/* ==========================
+   CARGANDO DETALLE
+========================== */
+
+.detail-loading-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    rgba(15, 23, 42, 0.45);
+}
+
+.detail-loading-card {
+  padding: 18px 24px;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #0f172a;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  box-shadow:
+    0 20px 50px
+    rgba(15, 23, 42, 0.2);
+}
+
+
+/* ==========================
+   ERROR DEL DETALLE
+========================== */
+
+.detail-error {
+  position: fixed;
+
+  right: 24px;
+  bottom: 24px;
+
+  z-index: 1100;
+
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 14px 18px;
+
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+
+  background: #fef2f2;
+
+  color: #b91c1c;
+
+  font-size: 12px;
+
+  box-shadow:
+    0 10px 30px
+    rgba(15, 23, 42, 0.15);
+}
+
+.detail-error button {
+  border: none;
+
+  background: transparent;
+
+  color: #b91c1c;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}

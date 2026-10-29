@@ -1,0 +1,148 @@
+<!-- ==========================
+     HISTORIAL
+========================== -->
+
+<section class="history-page">
+
+  <!-- ==========================
+       FILTROS
+  ========================== -->
+
+  <section class="history-panel">
+
+    <header class="panel-header">
+
+      <p>
+        Consulta los análisis por sector,
+        fecha o estado.
+      </p>
+
+    </header>
+
+    <app-history-filters
+      [sectors]="sectors()"
+      (filtersApplied)="onFiltersApplied($event)"
+      (filtersCleared)="onFiltersCleared()"
+    />
+
+  </section>
+
+
+  <!-- ==========================
+       RESUMEN
+  ========================== -->
+
+  <app-history-summary
+    [summary]="summary()"
+  />
+
+
+  <section class="history-panel">
+
+    <header class="panel-header">
+
+      <h2>
+        Historial de análisis
+      </h2>
+
+      <p>
+        Consulta los análisis realizados
+        y revisa sus resultados.
+      </p>
+
+    </header>
+
+
+    <!-- ==========================
+        CARGANDO
+    ========================== -->
+
+    @if (isLoading()) {
+
+      <div class="history-message">
+        Cargando historial...
+      </div>
+
+    }
+
+
+    <!-- ==========================
+        ERROR
+    ========================== -->
+
+    @else if (errorMessage()) {
+
+      <div class="history-message error">
+        {{ errorMessage() }}
+      </div>
+
+    }
+
+
+    <!-- ==========================
+        TABLA
+    ========================== -->
+
+    @else {
+
+      <app-history-table
+        [analyses]="analyses()"
+        (detailRequested)="onDetailRequested($event)"
+      />
+
+    }
+  </section>
+
+  <!-- ==========================
+      CARGANDO DETALLE
+  ========================== -->
+
+  @if (isDetailLoading()) {
+
+    <div class="detail-loading-overlay">
+
+      <div class="detail-loading-card">
+        Cargando detalle...
+      </div>
+
+    </div>
+
+  }
+
+
+  <!-- ==========================
+      DETALLE DEL ANALISIS
+  ========================== -->
+
+  @if (selectedAnalysis()) {
+
+    <app-history-detail
+      [analysis]="selectedAnalysis()!"
+      (closeRequested)="closeDetail()"
+    />
+
+  }
+
+
+  <!-- ==========================
+      ERROR DEL DETALLE
+  ========================== -->
+
+  @if (detailError()) {
+
+    <div class="detail-error">
+
+      {{ detailError() }}
+
+      <button
+        type="button"
+        (click)="closeDetail()"
+      >
+        Cerrar
+      </button>
+
+    </div>
+
+  }
+
+</section>

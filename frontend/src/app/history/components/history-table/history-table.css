@@ -1,0 +1,243 @@
+/* ==========================
+   CONTENEDOR
+========================== */
+
+.table-wrapper {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+
+/* ==========================
+   TABLA
+========================== */
+
+.history-table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  min-width: 900px;
+}
+
+
+/* ==========================
+   ENCABEZADO
+========================== */
+
+.history-table thead {
+  background: #f1f5f9;
+}
+
+.history-table th {
+  padding: 13px 14px;
+
+  border-bottom: 1px solid #e2e8f0;
+
+  color: #475569;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  text-align: left;
+
+  white-space: nowrap;
+}
+
+
+/* ==========================
+   FILAS
+========================== */
+
+.history-table td {
+  padding: 14px;
+
+  border-bottom: 1px solid #e2e8f0;
+
+  color: #334155;
+
+  font-size: 12px;
+
+  vertical-align: middle;
+}
+
+.history-table tbody tr {
+  transition:
+    background 0.15s ease;
+}
+
+.history-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+
+/* ==========================
+   NOMBRE
+========================== */
+
+.analysis-name {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.analysis-name strong {
+  color: #0f172a;
+
+  font-size: 12px;
+}
+
+.analysis-name span {
+  color: #94a3b8;
+
+  font-size: 10px;
+}
+
+
+/* ==========================
+   ESTADOS
+========================== */
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 88px;
+
+  padding: 6px 10px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+
+/* ==========================
+   COMPLETADO
+========================== */
+
+.status-badge.completed {
+  background: #dcfce7;
+
+  color: #15803d;
+}
+
+
+/* ==========================
+   PROCESANDO
+========================== */
+
+.status-badge.processing {
+  background: #dbeafe;
+
+  color: #1d4ed8;
+}
+
+
+/* ==========================
+   PENDIENTE
+========================== */
+
+.status-badge.pending {
+  background: #fef3c7;
+
+  color: #b45309;
+}
+
+
+/* ==========================
+   ERROR
+========================== */
+
+.status-badge.failed {
+  background: #fee2e2;
+
+  color: #b91c1c;
+}
+
+
+/* ==========================
+   ACCIONES
+========================== */
+
+.actions-column {
+  text-align: center !important;
+}
+
+.detail-button {
+  padding: 7px 14px;
+
+  border: 1px solid #2563eb;
+  border-radius: 7px;
+
+  background: #ffffff;
+
+  color: #2563eb;
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.detail-button:hover {
+  background: #2563eb;
+
+  color: #ffffff;
+}
+
+
+/* ==========================
+   VALOR VACIO
+========================== */
+
+.empty-value {
+  color: #94a3b8;
+}
+
+
+/* ==========================
+   SIN RESULTADOS
+========================== */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  min-height: 180px;
+
+  padding: 30px;
+
+  border: 1px dashed #cbd5e1;
+  border-radius: 10px;
+
+  background: #f8fafc;
+
+  text-align: center;
+}
+
+.empty-state strong {
+  color: #0f172a;
+
+  font-size: 14px;
+}
+
+.empty-state span {
+  color: #64748b;
+
+  font-size: 12px;
+}
