@@ -18,23 +18,79 @@ import { DashboardModule } from './dashboard/dashboard.module';
     }),
 
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
+    imports: [ConfigModule],
+    inject: [ConfigService],
 
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
+    useFactory: (
+      configService: ConfigService,
+    ) => {
+      const databaseUrl =
+        configService.get<string>(
+          'DATABASE_URL',
+        );
 
-        host: configService.getOrThrow<string>('DB_HOST'),
-        port: Number(configService.getOrThrow<string>('DB_PORT')),
-        username: configService.getOrThrow<string>('DB_USER'),
-        password: configService.getOrThrow<string>('DB_PASSWORD'),
-        database: configService.getOrThrow<string>('DB_NAME'),
+      // ==========================
+      // PRODUCCION / NEON
+      // ==========================
+
+      if (databaseUrl) {
+        return {
+          type: 'postgres' as const,
+
+          url:
+            databaseUrl,
+
+          ssl: {
+            rejectUnauthorized: false,
+          },
+
+          autoLoadEntities: true,
+
+          synchronize: false,
+        };
+      }
+
+
+      // ==========================
+      // LOCAL
+      // ==========================
+
+      return {
+        type: 'postgres' as const,
+
+        host:
+          configService.getOrThrow<string>(
+            'DB_HOST',
+          ),
+
+        port:
+          Number(
+            configService.getOrThrow<string>(
+              'DB_PORT',
+            ),
+          ),
+
+        username:
+          configService.getOrThrow<string>(
+            'DB_USER',
+          ),
+
+        password:
+          configService.getOrThrow<string>(
+            'DB_PASSWORD',
+          ),
+
+        database:
+          configService.getOrThrow<string>(
+            'DB_NAME',
+          ),
 
         autoLoadEntities: true,
 
         synchronize: false,
-      }),
-    }),
+      };
+    },
+  }),
 
     UsersModule,
 
