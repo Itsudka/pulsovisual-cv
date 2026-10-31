@@ -48,59 +48,143 @@ export class ProcessingService {
     flowLinePosition: number,
     flowTolerance: number,
   ): Promise<ProcessingResult> {
-    const cvDirectory = resolve(
-      process.cwd(),
-      '..',
-      'cv',
-    );
 
-    const scriptPath = resolve(
-      cvDirectory,
-      'main.py',
-    );
+    // ==========================
+    // DIRECTORIO DE CV
+    // ==========================
+
+    const cvDirectory =
+      process.env.CV_DIRECTORY
+        ? resolve(
+            process.env.CV_DIRECTORY,
+          )
+        : resolve(
+            process.cwd(),
+            '..',
+            'cv',
+          );
+
+
+    // ==========================
+    // SCRIPT
+    // ==========================
+
+    const scriptPath =
+      resolve(
+        cvDirectory,
+        'main.py',
+      );
+
+
+    // ==========================
+    // EJECUTABLE DE PYTHON
+    // ==========================
+
+    const pythonExecutable =
+      process.env.PYTHON_EXECUTABLE
+        ?? (
+          process.platform === 'win32'
+            ? 'python'
+            : 'python3'
+        );
+
 
     try {
       const {
         stdout,
         stderr,
       } = await execFileAsync(
-        'python',
+        pythonExecutable,
         [
           scriptPath,
           videoPath,
           '--headless',
           '--flow-line-position',
-          String(flowLinePosition),
+          String(
+            flowLinePosition,
+          ),
           '--flow-tolerance',
-          String(flowTolerance),
+          String(
+            flowTolerance,
+          ),
         ],
+        {
+          cwd:
+            cvDirectory,
+
+          maxBuffer:
+            10 * 1024 * 1024,
+        },
       );
+
 
       // ==========================
       // LOGS DE PYTHON
       // ==========================
 
       if (stderr) {
-        console.log(stderr);
+        console.log(
+          stderr,
+        );
       }
 
       // ==========================
       // RESULTADO
       // ==========================
 
+      const outputLines =
+        stdout
+          .trim()
+          .split(/\r?\n/)
+          .map(
+            (line) =>
+              line.trim(),
+          )
+          .filter(Boolean);
+
+
+      // ==========================
+      // BUSCAR JSON FINAL
+      // ==========================
+
+      const jsonLine =
+        [...outputLines]
+          .reverse()
+          .find(
+            (line) =>
+              line.startsWith('{') &&
+              line.endsWith('}'),
+          );
+
+
+      if (!jsonLine) {
+        console.error(
+          'SALIDA COMPLETA DE PYTHON:',
+          stdout,
+        );
+
+        throw new Error(
+          'Python no devolvió un resultado JSON válido',
+        );
+      }
+
+
       return JSON.parse(
-        stdout.trim(),
+        jsonLine,
       ) as ProcessingResult;
 
+      
     } catch (error) {
-      console.error(error);
+      console.error(
+        'ERROR AL EJECUTAR PYTHON:',
+        error,
+      );
 
       throw new InternalServerErrorException(
         'No fue posible procesar el video',
       );
     }
   }
-
 
   // ==========================
   // PROCESAR ANALISIS COMPLETO

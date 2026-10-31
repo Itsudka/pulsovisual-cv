@@ -68,15 +68,6 @@ parser.add_argument(
 args = parser.parse_args()
 
 
-# ==========================
-# CONFIGURACION DEL ANALISIS
-# ==========================
-
-flow_line_position = args.flow_line_position
-flow_tolerance = args.flow_tolerance
-
-args = parser.parse_args()
-
 
 # ==========================
 # CONFIGURACION DEL ANALISIS
