@@ -325,6 +325,125 @@
   }
 }
 
+/* ==========================
+   RESULTADO VISUAL
+========================== */
+
+.video-description {
+  margin:
+    -4px 0
+    18px;
+
+  color: #64748b;
+
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+
+/* ==========================
+   CONTENEDOR DEL VIDEO
+========================== */
+
+.video-container {
+  width: 100%;
+
+  overflow: hidden;
+
+  border:
+    1px solid #e2e8f0;
+
+  border-radius: 12px;
+
+  background: #020617;
+}
+
+
+/* ==========================
+   VIDEO
+========================== */
+
+.analysis-video {
+  display: block;
+
+  width: 100%;
+  max-height: 520px;
+
+  background: #000000;
+}
+
+
+/* ==========================
+   ESTADOS DEL VIDEO
+========================== */
+
+.video-state {
+  min-height: 120px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  padding: 24px;
+
+  border:
+    1px solid #e2e8f0;
+
+  border-radius: 12px;
+
+  background: #f8fafc;
+
+  color: #64748b;
+
+  font-size: 14px;
+}
+
+
+/* ==========================
+   ERROR DEL VIDEO
+========================== */
+
+.video-error {
+  border-color: #fecaca;
+
+  background: #fef2f2;
+
+  color: #b91c1c;
+}
+
+
+/* ==========================
+   LOADER
+========================== */
+
+.video-loader {
+  width: 18px;
+  height: 18px;
+
+  border:
+    2px solid #cbd5e1;
+
+  border-top-color:
+    #2563eb;
+
+  border-radius: 50%;
+
+  animation:
+    video-spin 0.7s linear infinite;
+}
+
+
+@keyframes video-spin {
+
+  to {
+    transform:
+      rotate(360deg);
+  }
+
+}
+
 @media (max-width: 550px) {
   .modal-backdrop {
     padding: 10px;

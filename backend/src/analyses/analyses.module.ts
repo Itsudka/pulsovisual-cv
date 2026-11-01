@@ -7,6 +7,7 @@ import { SectorsModule } from '../sectors/sectors.module';
 import { AnalysesController } from './analyses.controller';
 import { AnalysesService } from './analyses.service';
 import { Analysis } from './entity/analysis.entity';
+import { StorageService } from '../storage/storage.service';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { Analysis } from './entity/analysis.entity';
   ],
 
   controllers: [AnalysesController],
-  providers: [AnalysesService],
+  providers: [AnalysesService, StorageService,],
   exports: [
     AnalysesService,
   ],

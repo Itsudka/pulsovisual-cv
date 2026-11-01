@@ -15,7 +15,7 @@ import {
 import {
   environment,
 } from '../../environments/environment';
-import { HistoryAnalysis, HistoryFilters } from './interfaces/history.models';
+import { HistoryAnalysis, HistoryFilters, HistoryVideoUrl } from './interfaces/history.models';
 
 
 
@@ -124,4 +124,19 @@ export class HistoryService {
       `${this.apiUrl}/${id}`,
     );
   }
+
+  // ==========================
+  // OBTENER URL DEL VIDEO
+  // ==========================
+
+  getVideoUrl(
+    analysisId: number,
+  ) {
+    return this.http.get<HistoryVideoUrl>(
+      `${this.apiUrl}/${analysisId}/video-url`,
+    );
+  }
+
+
+
 }

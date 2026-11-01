@@ -11,6 +11,9 @@ import { promisify } from 'util';
 import { AnalysesService } from '../analyses/analyses.service';
 import { MetricsService } from '../metrics/metrics.service';
 import { ProcessAnalysisDto } from './dto/process-analysis.dto';
+import {
+  StorageService,
+} from '../storage/storage.service'
 
 const execFileAsync = promisify(execFile);
 
@@ -24,6 +27,7 @@ interface ProcessingResult {
   flowUpCount: number;
   flowDownCount: number;
   averageDwellSeconds: number;
+  outputVideoPath: string | null;
 }
 
 
@@ -36,6 +40,7 @@ export class ProcessingService {
   constructor(
     private readonly analysesService: AnalysesService,
     private readonly metricsService: MetricsService,
+    private readonly storageService: StorageService,
   ) {}
 
 
@@ -47,6 +52,7 @@ export class ProcessingService {
     videoPath: string,
     flowLinePosition: number,
     flowTolerance: number,
+    analysisId: number,
   ): Promise<ProcessingResult> {
 
     // ==========================
@@ -63,7 +69,17 @@ export class ProcessingService {
             '..',
             'cv',
           );
+    
+    // ==========================
+    // VIDEO PROCESADO
+    // ==========================
 
+    const outputVideoPath =
+      resolve(
+        cvDirectory,
+        'output',
+        `analysis-${analysisId}.mp4`,
+      );
 
     // ==========================
     // SCRIPT
@@ -107,6 +123,8 @@ export class ProcessingService {
           String(
             flowTolerance,
           ),
+          '--output-video',
+          outputVideoPath,
         ],
         {
           cwd:
@@ -249,8 +267,41 @@ export class ProcessingService {
         file.path,
         processAnalysisDto.flowLinePosition,
         processAnalysisDto.flowTolerancePx ?? 10,
+        analysis.id,
       );
 
+      console.log(
+        'VIDEO PROCESADO:',
+        result.outputVideoPath,
+      );
+
+      // ==========================
+      // GUARDAR VIDEO PROCESADO
+      // ==========================
+
+      if (result.outputVideoPath) {
+
+        const outputVideoKey =
+          `analyses/${analysis.id}/output.mp4`;
+
+
+        await this.storageService.uploadVideo(
+          result.outputVideoPath,
+          outputVideoKey,
+        );
+
+
+        await this.analysesService.updateOutputVideoKey(
+          analysis.id,
+          outputVideoKey,
+        );
+
+
+        console.log(
+          'VIDEO SUBIDO:',
+          outputVideoKey,
+        );
+      }
 
       // ==========================
       // GUARDAR METRICAS

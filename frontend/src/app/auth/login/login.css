@@ -66,29 +66,23 @@
    LOGO
 ========================== */
 
-.brand-logo,
-.mobile-logo {
+.brand-logo {
   display: flex;
   align-items: center;
   gap: 14px;
 
-  font-size: 22px;
-  font-weight: 700;
-}
-
-.brand-logo {
-  position: absolute;
-  top: -330px;
-  left: 0;
+  margin-bottom: 56px;
 }
 
 .logo-icon {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
 
   display: flex;
   align-items: center;
   justify-content: center;
+
+  flex-shrink: 0;
 
   border-radius: 12px;
 
@@ -98,6 +92,18 @@
 
   font-size: 24px;
   font-weight: 800;
+
+  box-shadow:
+    0 8px 24px rgba(15, 23, 42, 0.12);
+}
+
+.brand-name {
+  color: #ffffff;
+
+  font-size: 30px;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: -0.04em;
 }
 
 
@@ -362,6 +368,34 @@
 .login-button:disabled {
   opacity: 0.65;
   cursor: not-allowed;
+}
+
+
+/* ==========================
+   REGISTRO
+========================== */
+
+.register-link {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+
+  margin-top: 24px;
+
+  color: #64748b;
+
+  font-size: 14px;
+}
+
+.register-link a {
+  color: #2563eb;
+
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
 }
 
 

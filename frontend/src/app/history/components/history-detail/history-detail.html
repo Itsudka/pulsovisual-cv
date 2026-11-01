@@ -366,6 +366,84 @@
 
     </section>
 
+    <!-- ==========================
+        RESULTADO VISUAL
+    ========================== -->
+
+    @if (analysis().outputVideoKey) {
+
+      <section class="detail-section">
+
+        <h3>
+          Resultado visual
+        </h3>
+
+        <p class="video-description">
+          Visualización del procesamiento realizado
+          mediante detección y seguimiento.
+        </p>
+
+
+        <!-- ==========================
+            CARGANDO VIDEO
+        ========================== -->
+
+        @if (isVideoLoading()) {
+
+          <div class="video-state">
+
+            <span class="video-loader"></span>
+
+            <span>
+              Cargando resultado visual...
+            </span>
+
+          </div>
+
+        }
+
+
+        <!-- ==========================
+            ERROR DEL VIDEO
+        ========================== -->
+
+        @else if (videoError()) {
+
+          <div class="video-state video-error">
+
+            {{ videoError() }}
+
+          </div>
+
+        }
+
+
+        <!-- ==========================
+            REPRODUCTOR
+        ========================== -->
+
+        @else if (videoUrl()) {
+
+          <div class="video-container">
+
+            <video
+              class="analysis-video"
+              controls
+              preload="metadata"
+              [src]="videoUrl()"
+            >
+              Tu navegador no permite reproducir
+              este video.
+            </video>
+
+          </div>
+
+        }
+
+      </section>
+
+    }
+
 
     <!-- ==========================
          PIE DEL MODAL

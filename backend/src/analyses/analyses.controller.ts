@@ -75,7 +75,27 @@ export class AnalysesController {
     );
     }
 
+  // ==========================
+  // OBTENER URL DEL VIDEO
+  // ==========================
 
+  @UseGuards(AuthGuard)
+  @Get(':id/video-url')
+  getVideoUrl(
+    @Req() request: Request,
+    @Param(
+      'id',
+      ParseIntPipe,
+    ) id: number,
+  ) {
+    const user =
+      request['user'];
+
+    return this.analysesService.getVideoUrlByUser(
+      user.sub,
+      id,
+    );
+  }
 
 
 }

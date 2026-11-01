@@ -28,6 +28,25 @@ export class HistoryDetailComponent {
   readonly analysis =
     input.required<HistoryAnalysis>();
 
+  // ==========================
+  // VIDEO DEL ANALISIS
+  // ==========================
+
+  readonly videoUrl =
+    input<string | null>(
+      null,
+    );
+
+  readonly isVideoLoading =
+    input<boolean>(
+      false,
+    );
+
+  readonly videoError =
+    input<string | null>(
+      null,
+    );
+
 
   // ==========================
   // EVENTOS

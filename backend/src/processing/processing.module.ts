@@ -6,6 +6,9 @@ import { MetricsModule } from '../metrics/metrics.module';
 
 import { ProcessingService } from './processing.service';
 import { AnalysisProcessingController } from './analysis-processing.controller';
+import {
+  StorageService,
+} from '../storage/storage.service';
 
 @Module({
   imports: [
@@ -29,6 +32,7 @@ import { AnalysisProcessingController } from './analysis-processing.controller';
 
   providers: [
     ProcessingService,
+    StorageService,
   ],
 
   exports: [

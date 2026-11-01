@@ -6,6 +6,7 @@ import {
   AuthUser,
   LoginRequest,
   LoginResponse,
+  RegisterRequest,
 } from './auth.models';
 
 @Injectable({
@@ -100,5 +101,16 @@ export class AuthService {
     } catch {
       return null;
     }
+  }
+
+  // ==========================
+  // REGISTRO
+  // ==========================
+
+  register(registerRequest: RegisterRequest) {
+    return this.http.post(
+      `${this.apiUrl}/register`,
+      registerRequest,
+    );
   }
 }

@@ -242,6 +242,14 @@ export class History implements OnInit {
       true,
     );
 
+    this.videoUrl.set(
+      null,
+    );
+
+    this.videoError.set(
+      null,
+    );
+
     this.detailError.set(
       null,
     );
@@ -259,6 +267,17 @@ export class History implements OnInit {
           this.isDetailLoading.set(
             false,
           );
+
+
+          // ==========================
+          // CARGAR VIDEO SI EXISTE
+          // ==========================
+
+          if (detail.outputVideoKey) {
+            this.loadVideoUrl(
+              detail.id,
+            );
+          }
         },
 
         error: (error) => {
@@ -280,6 +299,24 @@ export class History implements OnInit {
 
 
   // ==========================
+  // VIDEO DEL ANALISIS
+  // ==========================
+
+  readonly videoUrl =
+    signal<string | null>(
+      null,
+    );
+
+  readonly isVideoLoading =
+    signal(false);
+
+  readonly videoError =
+    signal<string | null>(
+      null,
+    );
+
+
+  // ==========================
   // CERRAR DETALLE
   // ==========================
 
@@ -291,6 +328,70 @@ export class History implements OnInit {
     this.detailError.set(
       null,
     );
+
+    this.videoUrl.set(
+      null,
+    );
+
+    this.videoError.set(
+      null,
+    );
+
+    this.isVideoLoading.set(
+      false,
+    );
+  }
+  // ==========================
+  // CARGAR VIDEO
+  // ==========================
+
+  private loadVideoUrl(
+    analysisId: number,
+  ): void {
+
+    this.isVideoLoading.set(
+      true,
+    );
+
+    this.videoError.set(
+      null,
+    );
+
+    this.videoUrl.set(
+      null,
+    );
+
+
+    this.historyService
+      .getVideoUrl(
+        analysisId,
+      )
+      .subscribe({
+        next: (response) => {
+          this.videoUrl.set(
+            response.url,
+          );
+
+          this.isVideoLoading.set(
+            false,
+          );
+        },
+
+        error: (error) => {
+          console.error(
+            'ERROR AL CARGAR VIDEO:',
+            error,
+          );
+
+          this.videoError.set(
+            'No fue posible cargar el resultado visual del análisis.',
+          );
+
+          this.isVideoLoading.set(
+            false,
+          );
+        },
+      });
   }
 
 

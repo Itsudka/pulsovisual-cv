@@ -6,6 +6,7 @@ import { SectorsService } from '../sectors/sectors.service';
 import { Analysis } from './entity/analysis.entity';
 import { CreateAnalysisDto } from './dto.ts/create-analysis.dto';
 import { AnalysisFiltersDto } from './dto.ts/analysis-filters.dto';
+import { StorageService } from '../storage/storage.service';
 
 
 
@@ -17,6 +18,7 @@ export class AnalysesService {
     private readonly analysesRepository: Repository<Analysis>,
 
     private readonly sectorsService: SectorsService,
+    private readonly storageService: StorageService,
   ) {}
 
   async create(
@@ -42,6 +44,7 @@ export class AnalysesService {
       flowTolerancePx:
         createAnalysisDto.flowTolerancePx ?? 10,
       processedAt: null,
+      outputVideoKey: null,
     });
 
     return this.analysesRepository.save(analysis);
@@ -230,10 +233,68 @@ export class AnalysesService {
     );
   }
 
+  // ==========================
+  // GUARDAR VIDEO PROCESADO
+  // ==========================
+
+  async updateOutputVideoKey(
+    analysisId: number,
+    outputVideoKey: string,
+  ): Promise<void> {
+    await this.analysesRepository.update(
+      analysisId,
+      {
+        outputVideoKey,
+      },
+    );
+  }
 
 
+  // ==========================
+  // OBTENER URL DEL VIDEO
+  // ==========================
+
+  async getVideoUrlByUser(
+    userId: number,
+    analysisId: number,
+  ): Promise<{ url: string }> {
+
+    // ==========================
+    // VALIDAR ANALISIS
+    // ==========================
+
+    const analysis =
+      await this.findOneByUser(
+        userId,
+        analysisId,
+      );
 
 
+    // ==========================
+    // VALIDAR VIDEO
+    // ==========================
+
+    if (!analysis.outputVideoKey) {
+      throw new NotFoundException(
+        'Este análisis no tiene un video procesado',
+      );
+    }
+
+
+    // ==========================
+    // GENERAR URL FIRMADA
+    // ==========================
+
+    const url =
+      await this.storageService.getSignedVideoUrl(
+        analysis.outputVideoKey,
+      );
+
+
+    return {
+      url,
+    };
+  }
 
 
 

@@ -96,6 +96,18 @@ export class Analysis {
   })
   processedAt!: Date | null;
 
+  // ==========================
+  // VIDEO PROCESADO
+  // ==========================
+
+  @Column({
+    name: 'output_video_key',
+    type: 'varchar',
+    length: 500,
+    nullable: true,
+  })
+  outputVideoKey!: string | null;
+
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamptz',

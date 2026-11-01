@@ -2,20 +2,28 @@ import { Routes } from '@angular/router';
 
 import { authGuard } from './auth/auth.guard';
 import { Login } from './auth/login/login';
+
+
 import { Dashboard } from './dashboard/dashboard';
 import { Sectors } from './sectors/sectors';
 import { Layout } from './layout/layout';
 import { NewAnalysis } from './new-analysis/new-analysis';
-import {History,} from './history/history';
+import { History } from './history/history';
+import { Register } from './auth/register/register';
 
 export const routes: Routes = [
   // ==========================
-  // LOGIN
+  // AUTENTICACION
   // ==========================
 
   {
     path: 'login',
     component: Login,
+  },
+
+  {
+    path: 'register',
+    component: Register,
   },
 
 

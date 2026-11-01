@@ -118,6 +118,9 @@
 
     <app-history-detail
       [analysis]="selectedAnalysis()!"
+      [videoUrl]="videoUrl()"
+      [isVideoLoading]="isVideoLoading()"
+      [videoError]="videoError()"
       (closeRequested)="closeDetail()"
     />
 

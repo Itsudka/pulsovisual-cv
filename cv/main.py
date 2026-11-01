@@ -14,6 +14,8 @@ from config import (
     FLOW_LINE_MARGIN,
 )
 
+import subprocess
+
 
 # ==========================
 # RUTAS DEL PROYECTO
@@ -63,6 +65,13 @@ parser.add_argument(
     type=int,
     default=FLOW_LINE_MARGIN,
     help="Margen de tolerancia alrededor de la línea",
+)
+
+parser.add_argument(
+    "--output-video",
+    type=str,
+    default=None,
+    help="Ruta donde se guardará el video procesado",
 )
 
 args = parser.parse_args()
@@ -128,6 +137,68 @@ if fps <= 0:
         "No fue posible obtener los FPS del video"
     )
 
+# ==========================
+# VIDEO DE SALIDA
+# ==========================
+
+output_video_path = (
+    Path(args.output_video).resolve()
+    if args.output_video
+    else None
+)
+
+temporary_output_video_path = (
+    output_video_path.with_name(
+        f"{output_video_path.stem}-raw.mp4"
+    )
+    if output_video_path is not None
+    else None
+)
+
+video_writer = None
+
+if output_video_path is not None:
+
+    output_video_path.parent.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    fourcc = cv2.VideoWriter_fourcc(
+        *"mp4v"
+    )
+
+    video_writer = cv2.VideoWriter(
+        str(temporary_output_video_path),
+        fourcc,
+        fps,
+        (
+            width,
+            height,
+        ),
+    )
+
+    if not video_writer.isOpened():
+        cap.release()
+
+        raise RuntimeError(
+            "No fue posible crear el video procesado"
+        )
+
+    print(
+        f"Video de salida: {output_video_path}",
+        file=sys.stderr,
+    )
+
+
+# ==========================
+# MODO VISUAL
+# ==========================
+
+visual_output_enabled = (
+    not args.headless
+    or video_writer is not None
+)
 
 # ==========================
 # INFORMACION DE DIAGNOSTICO
@@ -274,7 +345,7 @@ try:
             # DIBUJO SOLO EN MODO VISUAL
             # ==========================
 
-            if not args.headless:
+            if visual_output_enabled:
 
                 # ==========================
                 # BOUNDING BOX
@@ -355,7 +426,7 @@ try:
         # VISUALIZACION
         # ==========================
 
-        if not args.headless:
+        if visual_output_enabled:
 
             # ==========================
             # METRICAS EN PANTALLA
@@ -442,30 +513,36 @@ try:
 
 
             # ==========================
-            # AMPLIAR SOLO VISUALIZACION
+            # GUARDAR FRAME PROCESADO
             # ==========================
 
-            display_frame = cv2.resize(
-                frame,
-                None,
-                fx=2,
-                fy=2,
-                interpolation=cv2.INTER_NEAREST,
-            )
+            if video_writer is not None:
+                video_writer.write(
+                    frame
+                )
 
 
             # ==========================
             # MOSTRAR VIDEO
             # ==========================
 
-            cv2.imshow(
-                "PulsoVisual - Tracking",
-                display_frame,
-            )
+            if not args.headless:
 
-            if cv2.waitKey(1) & 0xFF == ord("q"):
-                break
+                display_frame = cv2.resize(
+                    frame,
+                    None,
+                    fx=2,
+                    fy=2,
+                    interpolation=cv2.INTER_NEAREST,
+                )
 
+                cv2.imshow(
+                    "PulsoVisual - Tracking",
+                    display_frame,
+                )
+
+                if cv2.waitKey(1) & 0xFF == ord("q"):
+                    break
 
 finally:
 
@@ -475,9 +552,50 @@ finally:
 
     cap.release()
 
+    if video_writer is not None:
+        video_writer.release()
+
     if not args.headless:
         cv2.destroyAllWindows()
 
+
+
+# ==========================
+# CONVERTIR VIDEO PARA WEB
+# ==========================
+
+if (
+    temporary_output_video_path is not None
+    and output_video_path is not None
+):
+
+    subprocess.run(
+        [
+            "ffmpeg",
+            "-y",
+            "-i",
+            str(temporary_output_video_path),
+            "-c:v",
+            "libx264",
+            "-preset",
+            "veryfast",
+            "-crf",
+            "23",
+            "-pix_fmt",
+            "yuv420p",
+            "-movflags",
+            "+faststart",
+            "-an",
+            str(output_video_path),
+        ],
+        check=True,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+
+    temporary_output_video_path.unlink(
+        missing_ok=True,
+    )
 
 # ==========================
 # RESULTADOS FINALES
@@ -619,6 +737,11 @@ backend_result = {
 
     "averageDwellSeconds":
         metrics["permanencia"]["promedio_segundos"],
+
+    "outputVideoPath":
+        str(output_video_path)
+        if output_video_path is not None
+        else None,
 }
 
 print(

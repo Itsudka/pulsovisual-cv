@@ -67,6 +67,8 @@ export interface HistoryAnalysis {
   sector?: HistorySector;
 
   metric?: HistoryMetric | null;
+
+  outputVideoKey: string | null;
 }
 
 
@@ -93,4 +95,12 @@ export interface HistorySummary {
   totalAnalyses: number;
   registeredSectors: number;
   completedAnalyses: number;
+}
+
+// ==========================
+// URL DEL VIDEO
+// ==========================
+
+export interface HistoryVideoUrl {
+  url: string;
 }

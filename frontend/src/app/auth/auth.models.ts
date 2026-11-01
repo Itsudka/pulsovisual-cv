@@ -20,3 +20,13 @@ export interface LoginResponse {
   accessToken: string;
   user: AuthUser;
 }
+
+// ==========================
+// REGISTRO
+// ==========================
+
+export interface RegisterRequest {
+  name: string;
+  email: string;
+  password: string;
+}
