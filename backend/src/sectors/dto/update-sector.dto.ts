@@ -22,7 +22,13 @@ export class UpdateSectorDto {
   @IsIn([
     'ENTRADA_SALIDA',
     'PASILLO',
-    'CAJAS',
+    'ALMACEN',
+    'ZONA_ATENCION',
+    'ZONA_ESPERA',
+    'AREA_EXHIBICION',
+    'COMEDOR',
+    'ESTACIONAMIENTO',
+    'ESCALERAS_ASCENSORES',
     'OTRO',
   ])
   type?: string;

@@ -21,7 +21,13 @@ export interface Sector {
 export type SectorType =
   | 'ENTRADA_SALIDA'
   | 'PASILLO'
-  | 'CAJAS'
+  | 'ALMACEN'
+  | 'ZONA_ATENCION'
+  | 'ZONA_ESPERA'
+  | 'AREA_EXHIBICION'
+  | 'COMEDOR'
+  | 'ESTACIONAMIENTO'
+  | 'ESCALERAS_ASCENSORES'
   | 'OTRO';
 
 

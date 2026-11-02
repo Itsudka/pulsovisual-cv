@@ -61,17 +61,16 @@ export class SectorCards {
     type: string,
   ): string {
     const types: Record<string, string> = {
-      ENTRADA_SALIDA:
-        'Entrada / Salida',
-
-      PASILLO:
-        'Pasillo',
-
-      CAJAS:
-        'Cajas',
-
-      OTRO:
-        'Otro',
+      ENTRADA_SALIDA: 'Entrada / Salida',
+      PASILLO: 'Pasillo',
+      ALMACEN: 'ALMACEN',
+      ZONA_ATENCION: 'Zona de atención',
+      ZONA_ESPERA: 'Zona de espera',
+      AREA_EXHIBICION: 'Área de exhibición',
+      COMEDOR: 'Comedor',
+      ESTACIONAMIENTO: 'Estacionamiento',
+      ESCALERAS_ASCENSORES: 'Escaleras / Ascensores',
+      OTRO: 'Otro',
     };
 
     return types[type] ?? type;

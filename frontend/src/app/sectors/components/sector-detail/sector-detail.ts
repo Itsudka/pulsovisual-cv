@@ -52,7 +52,13 @@ export class SectorDetail {
     const types: Record<string, string> = {
       ENTRADA_SALIDA: 'Entrada / Salida',
       PASILLO: 'Pasillo',
-      CAJAS: 'Cajas',
+      ALMACEN: 'ALMACEN',
+      ZONA_ATENCION: 'Zona de atención',
+      ZONA_ESPERA: 'Zona de espera',
+      AREA_EXHIBICION: 'Área de exhibición',
+      COMEDOR: 'Comedor',
+      ESTACIONAMIENTO: 'Estacionamiento',
+      ESCALERAS_ASCENSORES: 'Escaleras / Ascensores',
       OTRO: 'Otro',
     };
 
