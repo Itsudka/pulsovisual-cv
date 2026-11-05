@@ -1,17 +1,29 @@
+
 import { Routes } from '@angular/router';
 
 import { authGuard } from './auth/auth.guard';
 import { Login } from './auth/login/login';
-
+import { Register } from './auth/register/register';
+import { Landing } from './landing/landing';
 
 import { Dashboard } from './dashboard/dashboard';
 import { Sectors } from './sectors/sectors';
 import { Layout } from './layout/layout';
 import { NewAnalysis } from './new-analysis/new-analysis';
 import { History } from './history/history';
-import { Register } from './auth/register/register';
 
 export const routes: Routes = [
+
+  // ==========================
+  // PAGINA PUBLICA
+  // ==========================
+
+  {
+    path: '',
+    component: Landing,
+    pathMatch: 'full',
+  },
+
   // ==========================
   // AUTENTICACION
   // ==========================
@@ -25,7 +37,6 @@ export const routes: Routes = [
     path: 'register',
     component: Register,
   },
-
 
   // ==========================
   // APLICACION
@@ -84,13 +95,12 @@ export const routes: Routes = [
     ],
   },
 
-
   // ==========================
   // RUTA DESCONOCIDA
   // ==========================
 
   {
     path: '**',
-    redirectTo: 'dashboard',
+    redirectTo: '',
   },
 ];

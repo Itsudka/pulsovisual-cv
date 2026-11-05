@@ -182,7 +182,7 @@
             registerForm.controls.password.invalid
           ) {
             <span class="field-error">
-              La contraseña debe tener al menos 6 caracteres.
+              La contraseña debe tener al menos 9 caracteres.
             </span>
           }
 
@@ -229,6 +229,14 @@
           </div>
         }
 
+        <!-- ==========================
+            CLOUDFLARE TURNSTILE
+        ========================== -->
+
+        <div class="field captcha-field">
+          <div #turnstileContainer></div>
+        </div>
+
 
         <!-- ==========================
              BOTON
@@ -237,7 +245,7 @@
         <button
           class="register-button"
           type="submit"
-          [disabled]="isLoading()"
+          [disabled]="isLoading() || !turnstileToken()"
         >
           @if (isLoading()) {
             Creando cuenta...

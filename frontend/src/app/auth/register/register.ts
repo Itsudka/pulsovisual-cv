@@ -1,7 +1,13 @@
+
 import {
+  AfterViewInit,
   Component,
+  ElementRef,
   inject,
+  NgZone,
+  OnDestroy,
   signal,
+  ViewChild,
 } from '@angular/core';
 
 import {
@@ -17,8 +23,78 @@ import {
   RouterLink,
 } from '@angular/router';
 
+import { finalize } from 'rxjs';
 import { AuthService } from '../auth.service';
 
+// ==========================
+// TIPOS DE CLOUDFLARE
+// ==========================
+
+interface TurnstileApi {
+  render(
+    container: HTMLElement,
+    options: {
+      sitekey: string;
+      callback: (token: string) => void;
+      'expired-callback'?: () => void;
+      'timeout-callback'?: () => void;
+      'error-callback'?: (code: string) => void;
+    },
+  ): string | undefined;
+
+  reset(widgetId: string): void;
+  remove(widgetId: string): void;
+}
+
+function getTurnstile(): TurnstileApi | undefined {
+  return (
+    window as Window & { turnstile?: TurnstileApi }
+  ).turnstile;
+}
+
+// ==========================
+// CARGAR CLOUDFLARE
+// ==========================
+
+let scriptPromise: Promise<void> | null = null;
+
+function loadTurnstile(): Promise<void> {
+  if (getTurnstile()) {
+    return Promise.resolve();
+  }
+
+  if (scriptPromise) {
+    return scriptPromise;
+  }
+
+  scriptPromise = new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+
+    script.src =
+      'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+
+    script.async = true;
+
+    script.onload = () => {
+      if (getTurnstile()) {
+        resolve();
+      } else {
+        scriptPromise = null;
+        reject(new Error('Turnstile no disponible'));
+      }
+    };
+
+    script.onerror = () => {
+      script.remove();
+      scriptPromise = null;
+      reject(new Error('Error cargando Turnstile'));
+    };
+
+    document.head.appendChild(script);
+  });
+
+  return scriptPromise;
+}
 
 // ==========================
 // VALIDADOR DE CONTRASEÑAS
@@ -27,8 +103,7 @@ import { AuthService } from '../auth.service';
 function passwordsMatchValidator(
   control: AbstractControl,
 ): ValidationErrors | null {
-  const password =
-    control.get('password')?.value;
+  const password = control.get('password')?.value;
 
   const confirmPassword =
     control.get('confirmPassword')?.value;
@@ -39,11 +114,8 @@ function passwordsMatchValidator(
 
   return password === confirmPassword
     ? null
-    : {
-        passwordsMismatch: true,
-      };
+    : { passwordsMismatch: true };
 }
-
 
 @Component({
   selector: 'app-register',
@@ -54,35 +126,41 @@ function passwordsMatchValidator(
   ],
 
   templateUrl: './register.html',
-
   styleUrl: './register.css',
 })
-export class Register {
+export class Register implements AfterViewInit, OnDestroy {
 
   // ==========================
   // DEPENDENCIAS
   // ==========================
 
-  private readonly formBuilder =
-    inject(FormBuilder);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+  private readonly ngZone = inject(NgZone);
 
-  private readonly authService =
-    inject(AuthService);
+  // ==========================
+  // CLOUDFLARE
+  // ==========================
 
-  private readonly router =
-    inject(Router);
+  @ViewChild('turnstileContainer')
+  private turnstileContainer!: ElementRef<HTMLDivElement>;
 
+  // Utiliza la misma Site Key del login
+  private readonly siteKey = '0x4AAAAAAF0DwvrUL7TefN9e';
+
+  private widgetId?: string;
+  private destroyed = false;
+
+  readonly turnstileToken = signal<string | null>(null);
 
   // ==========================
   // ESTADO
   // ==========================
 
-  readonly isLoading =
-    signal(false);
+  readonly isLoading = signal(false);
 
-  readonly errorMessage =
-    signal<string | null>(null);
-
+  readonly errorMessage = signal<string | null>(null);
 
   // ==========================
   // FORMULARIO
@@ -111,7 +189,7 @@ export class Register {
           '',
           [
             Validators.required,
-            Validators.minLength(6),
+            Validators.minLength(9),
           ],
         ],
 
@@ -122,22 +200,112 @@ export class Register {
           ],
         ],
       },
-
       {
-        validators:
-          passwordsMatchValidator,
+        validators: passwordsMatchValidator,
       },
     );
 
+  // ==========================
+  // INICIALIZAR CAPTCHA
+  // ==========================
+
+  ngAfterViewInit(): void {
+    void loadTurnstile()
+      .then(() => {
+        if (this.destroyed) return;
+
+        const turnstile = getTurnstile();
+
+        if (!turnstile) {
+          throw new Error('Turnstile no disponible');
+        }
+
+        this.widgetId = turnstile.render(
+          this.turnstileContainer.nativeElement,
+          {
+            sitekey: this.siteKey,
+
+            callback: (token: string) => {
+              this.ngZone.run(() => {
+                this.turnstileToken.set(token);
+                this.errorMessage.set(null);
+              });
+            },
+
+            'expired-callback': () => {
+              this.ngZone.run(() => {
+                this.turnstileToken.set(null);
+                this.errorMessage.set(
+                  'La verificación expiró. Complétala nuevamente.',
+                );
+              });
+            },
+
+            'timeout-callback': () => {
+              this.ngZone.run(() => {
+                this.turnstileToken.set(null);
+                this.errorMessage.set(
+                  'La verificación agotó el tiempo disponible.',
+                );
+              });
+            },
+
+            'error-callback': (code: string) => {
+              console.error('Error Turnstile:', code);
+
+              this.ngZone.run(() => {
+                this.turnstileToken.set(null);
+                this.errorMessage.set(
+                  'No fue posible completar la verificación de seguridad.',
+                );
+              });
+            },
+          },
+        );
+
+        if (!this.widgetId) {
+          throw new Error('No se pudo crear el CAPTCHA');
+        }
+      })
+      .catch(() => {
+        if (!this.destroyed) {
+          this.errorMessage.set(
+            'No fue posible cargar la verificación de seguridad.',
+          );
+        }
+      });
+  }
+
+  // ==========================
+  // REINICIAR CAPTCHA
+  // ==========================
+
+  private resetCaptcha(): void {
+    this.turnstileToken.set(null);
+
+    if (this.widgetId) {
+      getTurnstile()?.reset(this.widgetId);
+    }
+  }
 
   // ==========================
   // REGISTRO
   // ==========================
 
   register(): void {
+    if (this.isLoading()) return;
+
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
+      return;
+    }
 
+    const token = this.turnstileToken();
+
+    if (!token) {
+      this.errorMessage.set(
+        'Completa la verificación de seguridad.',
+      );
       return;
     }
 
@@ -148,21 +316,24 @@ export class Register {
       name,
       email,
       password,
-    } =
-      this.registerForm.getRawValue();
+    } = this.registerForm.getRawValue();
 
     this.authService
       .register({
         name,
         email,
         password,
+        turnstileToken: token,
       })
+      .pipe(
+        finalize(() => {
+          this.isLoading.set(false);
+        }),
+      )
       .subscribe({
         next: () => {
           this.router.navigate(
-            [
-              '/login',
-            ],
+            ['/login'],
             {
               state: {
                 registrationSuccess: true,
@@ -176,18 +347,26 @@ export class Register {
             this.errorMessage.set(
               'Ya existe una cuenta registrada con este correo.',
             );
-
-            return;
+          } else {
+            this.errorMessage.set(
+              'No fue posible crear la cuenta. Intenta nuevamente.',
+            );
           }
 
-          this.errorMessage.set(
-            'No fue posible crear la cuenta. Intenta nuevamente.',
-          );
-        },
-
-        complete: () => {
-          this.isLoading.set(false);
+          this.resetCaptcha();
         },
       });
+  }
+
+  // ==========================
+  // LIMPIEZA
+  // ==========================
+
+  ngOnDestroy(): void {
+    this.destroyed = true;
+
+    if (this.widgetId) {
+      getTurnstile()?.remove(this.widgetId);
+    }
   }
 }

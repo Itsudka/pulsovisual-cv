@@ -109,6 +109,177 @@
 }
 
 
+
+/* ==========================
+   OVERLAY DE PROCESAMIENTO
+========================== */
+
+.processing-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(5px);
+}
+
+
+/* ==========================
+   VENTANA MODAL
+========================== */
+
+.processing-modal {
+  width: 100%;
+  max-width: 460px;
+
+  padding: 42px 34px;
+
+  background: #ffffff;
+  border-radius: 20px;
+
+  text-align: center;
+
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.18);
+
+  animation: modalAppear 0.25s ease-out;
+}
+
+.processing-modal h2 {
+  margin: 22px 0 12px;
+
+  color: #17243c;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.processing-modal p {
+  margin: 0;
+
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+
+/* ==========================
+   SPINNER
+========================== */
+
+.processing-spinner-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 84px;
+  height: 84px;
+
+  margin: 0 auto;
+
+  background: #eff4ff;
+  border-radius: 50%;
+}
+
+.processing-spinner {
+  width: 46px;
+  height: 46px;
+
+  border: 4px solid #c7d7ff;
+  border-top-color: #2459df;
+  border-radius: 50%;
+
+  animation: spin 0.9s linear infinite;
+}
+
+
+/* ==========================
+   AVISOS
+========================== */
+
+.processing-notice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  margin-top: 28px;
+  padding: 14px;
+
+  background: #f1f5f9;
+  border-radius: 10px;
+
+  color: #475569;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.processing-notice-icon {
+  font-size: 20px;
+}
+
+.processing-warning {
+  margin-top: 20px;
+
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+
+/* ==========================
+   ANIMACIONES
+========================== */
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes modalAppear {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width: 600px) {
+  .processing-modal {
+    padding: 32px 22px;
+  }
+
+  .processing-modal h2 {
+    font-size: 21px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .processing-modal {
+    animation: none;
+  }
+
+  .processing-spinner {
+    animation-duration: 2s;
+  }
+}
+
+
 /* ==========================
    RESPONSIVE
 ========================== */

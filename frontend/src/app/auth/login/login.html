@@ -151,6 +151,16 @@
 
 
         <!-- ==========================
+            CLOUDFLARE TURNSTILE
+        ========================== -->
+
+        <div class="field captcha-field">
+          <div #turnstileContainer></div>
+        </div>
+
+
+
+        <!-- ==========================
              ERROR DE AUTENTICACION
         ========================== -->
 
@@ -168,7 +178,7 @@
         <button
           class="login-button"
           type="submit"
-          [disabled]="isLoading()"
+          [disabled]="isLoading() || !turnstileToken()"
         >
           @if (isLoading()) {
             Ingresando...

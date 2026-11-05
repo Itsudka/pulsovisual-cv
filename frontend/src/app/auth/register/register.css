@@ -428,6 +428,12 @@
   text-decoration: underline;
 }
 
+.captcha-field {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
 
 /* ==========================
    RESPONSIVE

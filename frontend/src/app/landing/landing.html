@@ -1,0 +1,420 @@
+
+<!-- ==========================
+     LANDING PULSOVISUAL
+========================== -->
+
+<div class="landing-page">
+
+  <!-- ==========================
+       NAVEGACION
+  ========================== -->
+
+  <header class="landing-header">
+
+    <a routerLink="/" class="brand">
+      <span class="brand-icon">P</span>
+      <span>PulsoVisual</span>
+    </a>
+
+    <nav class="navigation" aria-label="Navegación principal">
+      <a href="#funcionamiento">Cómo funciona</a>
+      <a href="#beneficios">Beneficios</a>
+      <a routerLink="/login" class="login-link">Iniciar sesión</a>
+      <a routerLink="/register" class="nav-button">
+        Crear cuenta
+      </a>
+    </nav>
+
+  </header>
+
+
+  <main>
+
+    <!-- ==========================
+         HERO
+    ========================== -->
+
+    <section class="hero">
+
+      <div class="hero-content">
+
+        <span class="eyebrow">
+          Analítica de video para espacios comerciales
+        </span>
+
+        <h1>
+          Comprende cómo se mueven
+          los visitantes en
+          <span>tus espacios comerciales.</span>
+        </h1>
+
+        <p class="hero-description">
+          PulsoVisual transforma grabaciones de video
+          en indicadores de conteo, flujo y permanencia,
+          para facilitar el análisis de la actividad
+          en tus establecimientos.
+        </p>
+
+        <div class="hero-actions">
+          <a routerLink="/register" class="primary-button">
+            Comenzar ahora
+          </a>
+
+          <a href="#funcionamiento" class="secondary-button">
+            Conoce la solución
+          </a>
+        </div>
+
+        <div class="hero-metrics">
+          <span>Conteo de visitantes</span>
+          <span>Flujo de movimiento</span>
+          <span>Tiempo de permanencia</span>
+        </div>
+
+      </div>
+
+
+      <!-- ==========================
+           DEMOSTRACION VISUAL
+      ========================== -->
+
+      <div class="demo-card">
+
+        <div class="demo-header">
+
+          <div class="demo-heading">
+            <span class="demo-dot"></span>
+            <span>Demostración de PulsoVisual</span>
+          </div>
+
+          <span class="demo-label">
+            Visión por computador
+          </span>
+
+        </div>
+
+    <div class="video-container">
+
+      <video
+        class="demo-video"
+        [src]="videos[activeVideoIndex].src"
+        autoplay
+        muted
+        loop
+        playsinline
+        controls
+        preload="metadata"
+      >
+        Tu navegador no permite reproducir este video.
+      </video>
+
+    </div>
+
+    <div class="video-navigation">
+
+      <button
+        type="button"
+        class="video-arrow"
+        (click)="previousVideo()"
+        aria-label="Video anterior"
+      >
+        &#10094;
+      </button>
+
+      <div class="video-information">
+
+        <strong>
+          {{ videos[activeVideoIndex].title }}
+        </strong>
+
+        <div class="video-dots">
+          @for (video of videos; track video.src; let i = $index) {
+            <button
+              type="button"
+              class="video-dot"
+              [class.active]="i === activeVideoIndex"
+              (click)="selectVideo(i)"
+              [attr.aria-label]="'Mostrar video ' + (i + 1)"
+              [attr.aria-current]="i === activeVideoIndex ? 'true' : null"
+            ></button>
+          }
+        </div>
+
+      </div>
+
+      <button
+        type="button"
+        class="video-arrow"
+        (click)="nextVideo()"
+        aria-label="Video siguiente"
+      >
+        &#10095;
+      </button>
+
+    </div>
+
+
+        <div class="demo-footer">
+          <span>Detección y seguimiento de objetos</span>
+          <span>Resultado visual del prototipo</span>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==========================
+         PROBLEMATICA
+    ========================== -->
+
+    <section class="problem-section">
+
+      <div class="section-heading">
+        <span class="section-label">EL PROBLEMA</span>
+
+        <h2>
+          Tus cámaras registran movimiento.
+          ¿Pero qué información obtienes?
+        </h2>
+
+        <p>
+          Las grabaciones contienen información sobre
+          la actividad de los visitantes, pero no
+          generan automáticamente indicadores que
+          faciliten su análisis.
+        </p>
+      </div>
+
+      <div class="problem-box">
+
+        <div>
+          <h3>De grabaciones a información</h3>
+
+          <p>
+            Revisar manualmente grandes cantidades
+            de video requiere tiempo. PulsoVisual
+            busca facilitar la obtención de
+            indicadores mediante técnicas de
+            visión por computador.
+          </p>
+        </div>
+
+        <div class="problem-highlight">
+          <strong>Video</strong>
+          <span>→</span>
+          <strong>Análisis</strong>
+          <span>→</span>
+          <strong>Métricas</strong>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==========================
+         FUNCIONAMIENTO
+    ========================== -->
+
+    <section
+      class="features-section"
+      id="funcionamiento"
+    >
+
+      <div class="section-heading">
+
+        <span class="section-label">
+          CÓMO FUNCIONA
+        </span>
+
+        <h2>
+          Tres métricas para comprender
+          mejor tus espacios
+        </h2>
+
+        <p>
+          PulsoVisual procesa grabaciones y presenta
+          los resultados mediante indicadores
+          que puedes consultar desde la plataforma.
+        </p>
+
+      </div>
+
+      <div class="features-grid">
+
+        <article class="feature-card">
+
+          <div class="feature-icon">01</div>
+
+          <h3>Conteo</h3>
+
+          <p>
+            Registra los objetos detectados y
+            seguidos durante el procesamiento
+            mediante identificadores temporales.
+          </p>
+
+        </article>
+
+        <article class="feature-card">
+
+          <div class="feature-icon">02</div>
+
+          <h3>Flujo</h3>
+
+          <p>
+            Identifica eventos de cruce sobre
+            una línea virtual y diferencia
+            la dirección del movimiento.
+          </p>
+
+        </article>
+
+        <article class="feature-card">
+
+          <div class="feature-icon">03</div>
+
+          <h3>Permanencia</h3>
+
+          <p>
+            Estima el tiempo durante el cual
+            los objetos permanecen bajo
+            seguimiento dentro de una escena.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==========================
+         BENEFICIOS
+    ========================== -->
+
+    <section
+      class="benefits-section"
+      id="beneficios"
+    >
+
+      <div class="benefits-content">
+
+        <span class="section-label">
+          ¿PARA QUÉ SIRVE?
+        </span>
+
+        <h2>
+          Información que puede apoyar
+          las decisiones de tu establecimiento
+        </h2>
+
+        <p>
+          Los indicadores de PulsoVisual pueden
+          utilizarse como punto de partida para
+          comprender patrones de movimiento y
+          actividad dentro de espacios comerciales.
+        </p>
+
+        <div class="benefit-list">
+
+          <div class="benefit-item">
+            <span class="check-icon">✓</span>
+            <span>
+              Analizar el movimiento de visitantes
+              por zonas o sectores.
+            </span>
+          </div>
+
+          <div class="benefit-item">
+            <span class="check-icon">✓</span>
+            <span>
+              Comparar indicadores de actividad
+              entre diferentes análisis.
+            </span>
+          </div>
+
+          <div class="benefit-item">
+            <span class="check-icon">✓</span>
+            <span>
+              Consultar resultados históricos
+              y visualizar el procesamiento.
+            </span>
+          </div>
+
+          <div class="benefit-item">
+            <span class="check-icon">✓</span>
+            <span>
+              Obtener información de referencia
+              para evaluar la distribución de espacios.
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="benefits-highlight">
+
+        <span class="highlight-tag">
+          PROPUESTA DE VALOR
+        </span>
+
+        <h3>
+          No se trata solamente de observar
+          un video.
+        </h3>
+
+        <p>
+          Se trata de transformar lo que ocurre
+          frente a una cámara en información
+          que pueda consultarse y analizarse.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==========================
+         LLAMADO A LA ACCION
+    ========================== -->
+
+    <section class="cta-section">
+
+      <h2>
+        Comienza a analizar tus espacios
+        con PulsoVisual
+      </h2>
+
+      <p>
+        Explora las funcionalidades del prototipo
+        y transforma tus grabaciones en métricas.
+      </p>
+
+      <a routerLink="/register" class="cta-button">
+        Crear una cuenta
+      </a>
+
+    </section>
+
+  </main>
+
+
+  <!-- ==========================
+       FOOTER
+  ========================== -->
+
+  <footer class="landing-footer">
+
+    <span>© 2026 PulsoVisual</span>
+
+    <span>
+      Prototipo de analítica de video mediante
+      visión por computador.
+    </span>
+
+  </footer>
+
+</div>

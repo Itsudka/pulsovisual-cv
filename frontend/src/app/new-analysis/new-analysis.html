@@ -105,9 +105,67 @@
        ESTADO
   ========================== -->
 
-  <app-processing-status
-    [state]="processingState()"
-  />
+  @if (!isProcessing()) {
+    <app-processing-status
+      [state]="processingState()"
+    />
+  }
+
+  <!-- ==========================
+      MODAL DE PROCESAMIENTO
+  ========================== -->
+
+  @if (isProcessing()) {
+
+    <div
+      class="processing-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="processing-title"
+      aria-describedby="processing-description"
+    >
+
+      <div class="processing-modal">
+
+        <div class="processing-spinner-container">
+          <div
+            class="processing-spinner"
+            aria-hidden="true"
+          ></div>
+        </div>
+
+        <h2 id="processing-title">
+          Procesando video
+        </h2>
+
+        <p id="processing-description">
+          PulsoVisual está analizando las detecciones,
+          trayectorias y movimientos registrados
+          en el video.
+        </p>
+
+        <div class="processing-notice">
+          <span class="processing-notice-icon">
+            ⏱
+          </span>
+
+          <span>
+            Este proceso puede tardar varios minutos
+            según la duración del video.
+          </span>
+        </div>
+
+        <div class="processing-warning">
+          No cierres ni actualices esta página
+          mientras finaliza el análisis.
+        </div>
+
+      </div>
+
+    </div>
+
+  }
+
 
   <!-- ==========================
       RESULTADO
