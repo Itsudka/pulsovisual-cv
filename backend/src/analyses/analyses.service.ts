@@ -45,6 +45,7 @@ export class AnalysesService {
         createAnalysisDto.flowTolerancePx ?? 10,
       processedAt: null,
       outputVideoKey: null,
+      trajectoriesKey: null,
     });
 
     return this.analysesRepository.save(analysis);
@@ -249,6 +250,21 @@ export class AnalysesService {
     );
   }
 
+    // ==========================
+    // GUARDAR TRAYECTORIAS
+    // ==========================
+
+    async updateTrajectoriesKey(
+      analysisId: number,
+      trajectoriesKey: string,
+    ): Promise<void> {
+      await this.analysesRepository.update(
+        analysisId,
+        {
+          trajectoriesKey,
+        },
+      );
+    }
 
   // ==========================
   // OBTENER URL DEL VIDEO
@@ -298,6 +314,34 @@ export class AnalysesService {
 
 
 
+
+  // ==========================
+  // OBTENER TRAYECTORIAS POR USUARIO
+  // ==========================
+
+  async getTrajectoriesByUser(
+    userId: number,
+    analysisId: number,
+  ): Promise<unknown> {
+
+    // Validar que el análisis pertenezca al usuario
+    const analysis = await this.findOneByUser(
+      userId,
+      analysisId,
+    );
+
+    // Verificar que tenga trayectorias
+    if (!analysis.trajectoriesKey) {
+      throw new NotFoundException(
+        'Este análisis no tiene trayectorias disponibles',
+      );
+    }
+
+    // Recuperar JSON desde S3
+    return this.storageService.getTrajectories(
+      analysis.trajectoriesKey,
+    );
+  }
 
 
 

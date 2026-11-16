@@ -30,6 +30,7 @@ OUTPUT_DIR = BASE_DIR / "output"
 OUTPUT_PATH = OUTPUT_DIR / "metrics.json"
 
 
+
 # ==========================
 # ARGUMENTOS
 # ==========================
@@ -74,7 +75,37 @@ parser.add_argument(
     help="Ruta donde se guardará el video procesado",
 )
 
+parser.add_argument(
+    "--confidence",
+    type=float,
+    default=0.5,
+    help="Confianza mínima para detectar personas"
+)
+
+parser.add_argument(
+    "--imgsz",
+    type=int,
+    default=960,
+    help="Resolución de entrada para YOLO"
+)
+
+
+parser.add_argument(
+    "--trajectories-output",
+    type=str,
+    default=None,
+    help="Ruta para guardar las trayectorias del análisis"
+)
+
+
 args = parser.parse_args()
+
+
+TRAJECTORIES_PATH = (
+    Path(args.trajectories_output).resolve()
+    if args.trajectories_output
+    else OUTPUT_DIR / "trajectories.json"
+)
 
 
 
@@ -234,10 +265,11 @@ print(
 # COMPONENTES PRINCIPALES
 # ==========================
 
+
 detector = PersonDetector(
-    model_name=str(
-        MODEL_PATH
-    )
+    model_name=str(MODEL_PATH),
+    confidence=args.confidence,
+    image_size=args.imgsz
 )
 
 flow_counter = FlowCounter(
@@ -257,6 +289,10 @@ dwell_counter = DwellTimeCounter(
 frame_number = 0
 
 unique_ids = set()
+
+observed_frames_by_id = {}
+
+trajectory_points = []
 
 
 # ==========================
@@ -283,6 +319,8 @@ try:
             frame
         )
 
+        observed_this_frame = set()
+
 
         # ==========================
         # PROCESAR TRACKS
@@ -301,9 +339,13 @@ try:
             # CONTEO DE IDS
             # ==========================
 
-            unique_ids.add(
-                track_id
-            )
+            unique_ids.add(track_id)
+
+            if track_id not in observed_this_frame:
+                observed_frames_by_id[track_id] = (
+                    observed_frames_by_id.get(track_id, 0) + 1
+                )
+                observed_this_frame.add(track_id)
 
 
             # ==========================
@@ -313,6 +355,16 @@ try:
             px, py = bottom_center(
                 track["box"]
             )
+
+            trajectory_points.append({
+                "track_id": track_id,
+                "frame": frame_number,
+                "timestamp_seconds": round(
+                    (frame_number - 1) / fps, 3
+                ),
+                "x": int(px),
+                "y": int(py)
+            })
 
 
             # ==========================
@@ -531,8 +583,8 @@ try:
                 display_frame = cv2.resize(
                     frame,
                     None,
-                    fx=2,
-                    fy=2,
+                    fx=0.6,
+                    fy=0.6,
                     interpolation=cv2.INTER_NEAREST,
                 )
 
@@ -614,9 +666,7 @@ flow_events = flow_counter.events()
 
 id_details = {}
 
-for track_id in sorted(
-    unique_ids
-):
+for track_id in sorted(unique_ids):
 
     dwell_detail = dwell_counter.details_for_id(
         track_id
@@ -629,9 +679,37 @@ for track_id in sorted(
     if dwell_detail is None:
         continue
 
+    # ==========================
+    # CALCULAR CONTINUIDAD
+    # ==========================
+
+    first_frame = dwell_detail["primer_frame"]
+    last_frame = dwell_detail["ultimo_frame"]
+
+    interval_frames = last_frame - first_frame + 1
+
+    observed_frames = observed_frames_by_id.get(
+        track_id, 0
+    )
+
+    missing_frames = interval_frames - observed_frames
+
+    continuity_percentage = round(
+        (observed_frames / interval_frames) * 100,
+        2
+    )
+
+    # ==========================
+    # REGISTRAR DETALLE
+    # ==========================
+
     id_details[str(track_id)] = {
         **dwell_detail,
         **flow_detail,
+        "fotogramas_observados": observed_frames,
+        "fotogramas_intervalo": interval_frames,
+        "fotogramas_sin_deteccion": missing_frames,
+        "continuidad_porcentaje": continuity_percentage,
     }
 
 
@@ -702,23 +780,40 @@ OUTPUT_DIR.mkdir(
     exist_ok=True,
 )
 
+TRAJECTORIES_PATH.parent.mkdir(
+    parents=True,
+    exist_ok=True
+)
 
 # ==========================
-# GUARDAR METRICAS
+# GUARDAR TRAYECTORIAS
 # ==========================
+
+trajectory_data = {
+    "video": {
+        "width": width,
+        "height": height,
+        "fps": fps
+    },
+    "configuration": {
+        "confidence": args.confidence,
+        "imgsz": args.imgsz
+    },
+    "points": trajectory_points
+}
 
 with open(
-    OUTPUT_PATH,
+    TRAJECTORIES_PATH,
     "w",
-    encoding="utf-8",
+    encoding="utf-8"
 ) as file:
-
     json.dump(
-        metrics,
+        trajectory_data,
         file,
-        indent=4,
-        ensure_ascii=False,
+        indent=2,
+        ensure_ascii=False
     )
+
 
 
 # ==========================
@@ -742,6 +837,8 @@ backend_result = {
         str(output_video_path)
         if output_video_path is not None
         else None,
+    
+    "trajectoriesPath": str(TRAJECTORIES_PATH),
 }
 
 print(

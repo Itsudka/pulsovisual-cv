@@ -108,6 +108,14 @@ export class Analysis {
   })
   outputVideoKey!: string | null;
 
+  @Column({
+    name: 'trajectories_key',
+    type: 'varchar',
+    length: 500,
+    nullable: true,
+  })
+  trajectoriesKey!: string | null;
+
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamptz',

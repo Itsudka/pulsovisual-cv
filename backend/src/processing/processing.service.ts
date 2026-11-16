@@ -28,6 +28,7 @@ interface ProcessingResult {
   flowDownCount: number;
   averageDwellSeconds: number;
   outputVideoPath: string | null;
+  trajectoriesPath: string;
 }
 
 
@@ -81,6 +82,12 @@ export class ProcessingService {
         `analysis-${analysisId}.mp4`,
       );
 
+    const trajectoriesPath = resolve(
+      cvDirectory,
+      'output',
+      `analysis-${analysisId}-trajectories.json`,
+    );
+
     // ==========================
     // SCRIPT
     // ==========================
@@ -125,6 +132,8 @@ export class ProcessingService {
           ),
           '--output-video',
           outputVideoPath,
+          '--trajectories-output',
+          trajectoriesPath,
         ],
         {
           cwd:
@@ -275,6 +284,11 @@ export class ProcessingService {
         result.outputVideoPath,
       );
 
+      console.log(
+        'TRAYECTORIAS GENERADAS:',
+        result.trajectoriesPath,
+      );
+
       // ==========================
       // GUARDAR VIDEO PROCESADO
       // ==========================
@@ -327,6 +341,36 @@ export class ProcessingService {
         },
       );
 
+
+      // ==========================
+      // GUARDAR TRAYECTORIAS EN S3
+      // ==========================
+
+      if (result.trajectoriesPath) {
+
+        const trajectoriesKey =
+          `analyses/${analysis.id}/trajectories.json`;
+
+        await this.storageService.uploadTrajectories(
+          result.trajectoriesPath,
+          trajectoriesKey,
+        );
+
+        // ==========================
+        // GUARDAR REFERENCIA EN BD
+        // ==========================
+
+        await this.analysesService.updateTrajectoriesKey(
+          analysis.id,
+          trajectoriesKey,
+        );
+
+        console.log(
+          'TRAYECTORIAS SUBIDAS:',
+          trajectoriesKey,
+        );
+      }
+
     } catch (error) {
       // ==========================
       // MARCAR COMO FAILED
@@ -340,22 +384,76 @@ export class ProcessingService {
 
       throw error;
 
-    } finally {
+    } 
+    finally {
+
       // ==========================
-      // ELIMINAR VIDEO TEMPORAL
+      // RUTAS DE ARCHIVOS TEMPORALES
       // ==========================
 
-      try {
-        await unlink(
-          file.path,
+      const temporaryFiles = [
+        file.path,
+      ];
+
+      if (analysisId !== null) {
+
+        const cvDirectory =
+          process.env.CV_DIRECTORY
+            ? resolve(process.env.CV_DIRECTORY)
+            : resolve(process.cwd(), '..', 'cv');
+
+        const outputDirectory = resolve(
+          cvDirectory,
+          'output',
         );
-      } catch (error) {
-        console.error(
-          'No fue posible eliminar el video temporal',
-          error,
+
+        temporaryFiles.push(
+          resolve(
+            outputDirectory,
+            `analysis-${analysisId}.mp4`,
+          ),
+          resolve(
+            outputDirectory,
+            `analysis-${analysisId}-raw.mp4`,
+          ),
+          resolve(
+            outputDirectory,
+            `analysis-${analysisId}-trajectories.json`,
+          ),
         );
       }
+
+      // ==========================
+      // ELIMINAR ARCHIVOS
+      // ==========================
+
+      for (const temporaryFile of temporaryFiles) {
+
+        try {
+          await unlink(temporaryFile);
+
+          console.log(
+            'ARCHIVO TEMPORAL ELIMINADO:',
+            temporaryFile,
+          );
+
+        } catch (error) {
+
+          if (
+            (error as NodeJS.ErrnoException).code !== 'ENOENT'
+          ) {
+            console.error(
+              'ERROR AL ELIMINAR ARCHIVO TEMPORAL:',
+              temporaryFile,
+              error,
+            );
+          }
+        }
+      }
     }
+
+
+    
 
 
     // ==========================

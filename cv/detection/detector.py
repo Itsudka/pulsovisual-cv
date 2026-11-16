@@ -2,9 +2,18 @@ from ultralytics import YOLO
 
 
 class PersonDetector:
-    def __init__(self, model_name="yolo11n.pt", confidence=0.5):
+    def __init__(
+        self,
+        model_name="yolo11n.pt",
+        confidence=0.5,
+        image_size=640
+    ):
         self.model = YOLO(model_name)
         self.confidence = confidence
+        self.image_size = image_size
+
+
+
 
     def track(self, frame):
         results = self.model.track(
@@ -12,6 +21,7 @@ class PersonDetector:
             persist=True,
             classes=[0],
             conf=self.confidence,
+            imgsz=self.image_size,
             tracker="botsort.yaml",
             verbose=False
         )

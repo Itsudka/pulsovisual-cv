@@ -97,5 +97,23 @@ export class AnalysesController {
     );
   }
 
+    // ==========================
+  // OBTENER TRAYECTORIAS
+  // ==========================
+
+  @UseGuards(AuthGuard)
+  @Get(':id/trajectories')
+  getTrajectories(
+    @Req() request: Request,
+    @Param('id', ParseIntPipe) id: number,
+  ) {
+    const user = request['user'];
+
+    return this.analysesService.getTrajectoriesByUser(
+      user.sub,
+      id,
+    );
+  }
+
 
 }

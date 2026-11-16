@@ -109,6 +109,50 @@ export class StorageService {
 
 
   // ==========================
+  // SUBIR TRAYECTORIAS
+  // ==========================
+
+  async uploadTrajectories(
+    filePath: string,
+    key: string,
+  ): Promise<string> {
+
+    try {
+      const upload = new Upload({
+        client: this.s3Client,
+
+        params: {
+          Bucket: this.bucket,
+
+          Key: key,
+
+          Body: createReadStream(
+            filePath,
+          ),
+
+          ContentType: 'application/json',
+        },
+      });
+
+      await upload.done();
+
+      return key;
+
+    } catch (error) {
+      console.error(
+        'ERROR AL SUBIR TRAYECTORIAS:',
+        error,
+      );
+
+      throw new InternalServerErrorException(
+        'No fue posible almacenar las trayectorias',
+      );
+    }
+  }
+
+
+
+  // ==========================
   // URL FIRMADA
   // ==========================
 
@@ -135,4 +179,47 @@ export class StorageService {
       },
     );
   }
+
+
+  // ==========================
+  // OBTENER TRAYECTORIAS
+  // ==========================
+
+  async getTrajectories(
+    key: string,
+  ): Promise<unknown> {
+
+    try {
+      const response = await this.s3Client.send(
+        new GetObjectCommand({
+          Bucket: this.bucket,
+          Key: key,
+        }),
+      );
+
+      if (!response.Body) {
+        throw new Error(
+          'El archivo de trayectorias está vacío',
+        );
+      }
+
+      const content =
+        await response.Body.transformToString();
+
+      return JSON.parse(content) as unknown;
+
+    } catch (error) {
+      console.error(
+        'ERROR AL OBTENER TRAYECTORIAS:',
+        error,
+      );
+
+      throw new InternalServerErrorException(
+        'No fue posible recuperar las trayectorias',
+      );
+    }
+  }
+
+
+
 }

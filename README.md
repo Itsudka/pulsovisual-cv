@@ -1,3 +1,5 @@
+> **Documentación actualizada (14 de noviembre de 2026):** consulta la [documentación integral del proyecto](DOCUMENTACION_PROYECTO.md) y el [anexo completo de código fuente](docs/CODIGO_FUENTE.md). El contenido que sigue describe el prototipo anterior y no refleja la arquitectura actual con `backend/`, `frontend/`, PostgreSQL y S3.
+
 # PulsoVisual — MVP académico
 
 PulsoVisual analiza un video pregrabado para obtener IDs únicos detectados, flujo direccional y permanencia en una zona. El objetivo del MVP es demostrar la integración de visión por computador, una API y un panel web. Las métricas describen el seguimiento del video; no identifican personas reales.
