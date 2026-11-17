@@ -1,0 +1,28 @@
+
+<div class="heatmap-viewer">
+
+  <!-- ==========================
+       VIDEO DE REFERENCIA
+  ========================== -->
+
+  <video
+    [src]="videoUrl()"
+    preload="auto"
+    muted
+    playsinline
+    aria-label="Fotograma del análisis procesado"
+    (loadedmetadata)="seekReferenceFrame($event)"
+  ></video>
+
+  <!-- ==========================
+       CAPA DEL MAPA DE CALOR
+  ========================== -->
+
+  <canvas
+    #heatCanvas
+    class="heatmap-canvas"
+    aria-label="Mapa de calor de las trayectorias"
+    role="img"
+  ></canvas>
+
+</div>

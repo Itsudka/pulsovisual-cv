@@ -1,0 +1,226 @@
+
+<div class="heatmaps-page">
+
+  <section class="heatmaps-panel">
+
+    <h2>Visualización de mapas de calor</h2>
+
+    <p>
+      Selecciona un análisis completado para visualizar
+      la concentración de detecciones registradas
+      durante el procesamiento del video.
+    </p>
+
+    <!-- ==========================
+         SELECTOR DE ANALISIS
+    ========================== -->
+
+    <div class="analysis-selector">
+
+      <label for="analysisId">
+        Seleccionar análisis
+      </label>
+
+      @if (isLoading()) {
+
+        <p>Cargando análisis...</p>
+
+      } @else if (errorMessage()) {
+
+        <p class="error-message">
+          {{ errorMessage() }}
+        </p>
+
+        <button
+          type="button"
+          (click)="loadAnalyses()"
+        >
+          Reintentar
+        </button>
+
+      } @else {
+
+        <select
+          id="analysisId"
+          [value]="selectedAnalysisId() ?? ''"
+          (change)="onAnalysisChange($event)"
+        >
+
+          <option value="">
+            Selecciona un análisis
+          </option>
+
+          @for (analysis of analyses(); track analysis.id) {
+
+            <option [value]="analysis.id">
+              #{{ analysis.id }} - {{ analysis.name }}
+            </option>
+
+          }
+
+        </select>
+
+        @if (analyses().length === 0) {
+
+          <p>
+            No hay análisis completados disponibles.
+          </p>
+
+        }
+
+      }
+
+    </div>
+
+    <!-- ==========================
+         INFORMACION SELECCIONADA
+    ========================== -->
+
+    @if (selectedAnalysis(); as analysis) {
+
+      <div class="analysis-info">
+
+        <h3>{{ analysis.name }}</h3>
+
+        <p>
+          Sector:
+          {{ analysis.sector?.name ?? 'Sin sector' }}
+        </p>
+
+        <div class="analysis-metrics">
+
+          <div class="metric-card">
+
+            <span>Tracks detectados</span>
+
+            <strong>
+              {{ analysis.metric?.detectedTrackCount ?? 0 }}
+            </strong>
+
+          </div>
+
+          <div class="metric-card">
+
+            <span>Flujo hacia arriba</span>
+
+            <strong>
+              {{ analysis.metric?.flowUpCount ?? 0 }}
+            </strong>
+
+          </div>
+
+          <div class="metric-card">
+
+            <span>Flujo hacia abajo</span>
+
+            <strong>
+              {{ analysis.metric?.flowDownCount ?? 0 }}
+            </strong>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    }
+
+    <!-- ==========================
+         VISUALIZACION DEL MAPA
+    ========================== -->
+
+    <div class="heatmap-placeholder">
+
+      <!-- CARGANDO TRAYECTORIAS -->
+
+      @if (isLoadingTrajectories()) {
+
+        <span>
+          Recuperando coordenadas del análisis...
+        </span>
+
+      <!-- ERROR EN TRAYECTORIAS -->
+
+      } @else if (trajectoriesError()) {
+
+        <span class="error-message">
+          {{ trajectoriesError() }}
+        </span>
+
+      <!-- TRAYECTORIAS DISPONIBLES -->
+
+      } @else if (trajectories(); as data) {
+
+        <!-- ERROR AL RECUPERAR VIDEO -->
+
+        @if (videoError()) {
+
+          <p class="error-message">
+            {{ videoError() }}
+          </p>
+
+        <!-- VIDEO DISPONIBLE -->
+
+        } @else if (videoUrl(); as url) {
+
+          <div class="heatmap-content">
+
+            <!-- ==========================
+                 VIDEO DE REFERENCIA
+            ========================== -->
+
+            <app-heatmap-viewer
+              [videoUrl]="url"
+              [trajectories]="data"
+            ></app-heatmap-viewer>
+
+            <!-- ==========================
+                 INFORMACION DE TRAYECTORIAS
+            ========================== -->
+
+            <div class="heatmap-information">
+
+              <p>
+                Resolución original:
+                {{ data.video.width }} ×
+                {{ data.video.height }}
+              </p>
+
+              <p>
+                FPS: {{ data.video.fps }}
+              </p>
+
+              <p>
+                Puntos registrados:
+                {{ data.points.length }}
+              </p>
+
+            </div>
+
+          </div>
+
+        <!-- CARGANDO VIDEO -->
+
+        } @else {
+
+          <span>
+            Cargando video de referencia...
+          </span>
+
+        }
+
+      <!-- SIN ANALISIS SELECCIONADO -->
+
+      } @else {
+
+        <span>
+          Selecciona un análisis para comenzar.
+        </span>
+
+      }
+
+    </div>
+
+  </section>
+
+</div>

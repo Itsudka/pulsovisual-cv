@@ -11,6 +11,7 @@ import { Sectors } from './sectors/sectors';
 import { Layout } from './layout/layout';
 import { NewAnalysis } from './new-analysis/new-analysis';
 import { History } from './history/history';
+import { Heatmaps } from './heatmaps/heatmaps';
 
 export const routes: Routes = [
 
@@ -90,6 +91,16 @@ export const routes: Routes = [
           title: 'Historial',
           subtitle:
             'Consulta y compara los análisis realizados',
+        },
+      },
+
+      {
+        path: 'heatmaps',
+        component: Heatmaps,
+        data: {
+          title: 'Mapas de calor',
+          subtitle:
+            'Visualiza las zonas de mayor concentración de detecciones',
         },
       },
     ],

@@ -1,5 +1,7 @@
 # Frontend
 
+Guía del proyecto: [estructura del frontend y código para implementar otro módulo](../docs/FRONTEND_GUIA_MODULOS.md). Incluye una pantalla de ejemplo con modelos, servicio, filtros, tabla, estado, rutas y navegación.
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.19.
 
 ## Development server
